@@ -1,0 +1,229 @@
+\subsection{Regime 4: saturating antibody}
+
+In this regime, antibody is so abundant that even the weak, off-target
+interactions are saturated. As in Regime 1, let $S\in\{S_c,S_t\}$ with
+$S_c=A+B$ and $S_t=A'+B$, and assume the following for both conditions.
+
+\textbf{Assumption.} The antibody left over after binding \emph{every}
+epitope, target and off-target, is much greater than $K_{d2}$:
+$$
+Y-S-(C+D)\gg K_{d2}.
+$$
+For brevity, write $E=Y-S-(C+D)$ for this \textbf{excess antibody}
+($E_c$ and $E_t$ for the two conditions). Because $S_t<S_c$ when $A'<A$,
+$$
+E_t=Y-S_t-(C+D)>Y-S_c-(C+D)=E_c,
+$$
+so it suffices to check the assumption for the control condition,
+$E_c\gg K_{d2}$.
+
+\textbf{Intuition.} Each epitope can hold at most one antibody, so at
+most $S+(C+D)$ antibody can be bound, and at least $E$ must remain free.
+Recall that $K_{d2}$ is the free-antibody concentration at which
+off-target epitopes are half-bound. If the guaranteed free antibody $E$
+is already far above $K_{d2}$, then off-target epitopes are nearly all
+bound---and target epitopes, which bind more tightly ($K_{d1}<K_{d2}$),
+are even more completely bound. Note that this requires both $Y\gg K_{d2}$
+\emph{and} $Y>S+C+D$: antibody must outnumber all epitopes, including the
+typically very abundant off-target ones.
+
+We now derive $\rho$ for either condition. (For the treatment condition,
+$Y_f$, $\theta_1$, $\theta_2$, $E$, and $\rho$ should be read as their
+primed counterparts.)
+
+\textbf{Step 1: a lower bound on $Y_f$.} Start from antibody conservation
+(derived in Regime 1),
+$$
+Y=Y_f+S\theta_1+(C+D)\theta_2.
+$$
+Solving for $Y_f$, and then adding and subtracting $S+(C+D)$,
+$$\begin{aligned}
+Y_f
+&=Y-S\theta_1-(C+D)\theta_2 \\
+&=\bigl[Y-S-(C+D)\bigr]+S-S\theta_1+(C+D)-(C+D)\theta_2 \\
+&=E+S(1-\theta_1)+(C+D)(1-\theta_2).
+\end{aligned}$$
+Intuitively, the free antibody is the excess antibody $E$, plus one
+antibody ``returned to solution'' for each epitope that is unbound.
+Because $\theta_1\le1$ and $\theta_2\le1$, the last two terms are
+nonnegative, so
+\begin{equation}
+Y_f\ge E.
+\label{eq:r4-1}
+\end{equation}
+By the assumption, $E\gg K_{d2}$, so $Y_f\gg K_{d2}$. Since $K_{d1}<K_{d2}$,
+also $Y_f\gg K_{d1}$.
+
+\textbf{Step 2: both classes of epitope are nearly fully bound.} From
+$\theta_2=Y_f/(Y_f+K_{d2})$,
+$$
+1-\theta_2
+=\frac{Y_f+K_{d2}}{Y_f+K_{d2}}-\frac{Y_f}{Y_f+K_{d2}}
+=\frac{K_{d2}}{Y_f+K_{d2}}.
+$$
+Dropping $K_{d2}$ from the denominator makes the fraction larger, and
+then substituting \eqref{eq:r4-1} (a larger denominator makes it smaller),
+$$
+1-\theta_2
+\le\frac{K_{d2}}{Y_f}
+\le\frac{K_{d2}}{E}
+\ll1.
+$$
+By the same logic, $1-\theta_1=K_{d1}/(Y_f+K_{d1})\le K_{d1}/E$, which is
+even smaller because $K_{d1}<K_{d2}$. Thus $\theta_1\approx\theta_2\approx1$:
+nearly every epitope, target or off-target, is bound by antibody.
+
+\textbf{Step 3: an exact expression for $1-\rho$.} Writing $1$ with the
+same denominator as $\rho$,
+\begin{equation}
+1-\rho
+=\frac{Y_f+K_{d2}}{Y_f+K_{d2}}-\frac{Y_f+K_{d1}}{Y_f+K_{d2}}
+=\frac{K_{d2}-K_{d1}}{Y_f+K_{d2}}.
+\label{eq:r4-2}
+\end{equation}
+Since $K_{d2}>K_{d1}$, the numerator is positive, so $1-\rho>0$, i.e.,
+$\rho<1$.
+
+\textbf{Step 4: $\rho\approx1$.} In \eqref{eq:r4-2}, the numerator
+satisfies $K_{d2}-K_{d1}<K_{d2}$, and the denominator satisfies
+$Y_f+K_{d2}>Y_f\ge E$ by \eqref{eq:r4-1}. A larger numerator and a
+smaller denominator each make a positive fraction larger, so
+\begin{equation}
+0<1-\rho<\frac{K_{d2}}{Y_f}\le\frac{K_{d2}}{E}=\frac{K_{d2}}{Y-S-(C+D)}\ll1.
+\label{eq:r4-3}
+\end{equation}
+Therefore $\rho\approx1$, and by the same argument for the treatment
+condition, $\rho'\approx1$.
+
+\textbf{Step 5: comparing $\rho'$ and $\rho$.} First, $\rho$ increases
+with $Y_f$. Differentiating with the quotient rule,
+$$
+\frac{d\rho}{dY_f}
+=\frac{(1)(Y_f+K_{d2})-(Y_f+K_{d1})(1)}{(Y_f+K_{d2})^2}
+=\frac{K_{d2}-K_{d1}}{(Y_f+K_{d2})^2}
+>0.
+$$
+Second, $Y_f'>Y_f$ when $S_t<S_c$. To see this, substitute
+$\theta_1=Y_f/(Y_f+K_{d1})$ and $\theta_2=Y_f/(Y_f+K_{d2})$ into antibody
+conservation, and define the right-hand side as a function of a trial
+free-antibody concentration $x\ge 0$ and the target total $S$:
+$$
+F(x,S)=x+S\frac{x}{x+K_{d1}}+(C+D)\frac{x}{x+K_{d2}}.
+$$
+The equilibrium $Y_f$ is the value of $x$ that solves $F(x,S)=Y$.
+\begin{itemize}
+    \item $F$ is increasing in $x$: each term is increasing, since
+    $\frac{d}{dx}x=1>0$ and, by the quotient rule, for any $K>0$,
+    $$
+    \frac{d}{dx}\frac{x}{x+K}
+    =\frac{(1)(x+K)-x(1)}{(x+K)^2}
+    =\frac{K}{(x+K)^2}>0.
+    $$
+    \item $F$ is increasing in $S$ for $x>0$: $\partial F/\partial S
+    =x/(x+K_{d1})=\theta_1>0$.
+\end{itemize}
+The two conditions share $Y$, so $F(Y_f,S_c)=Y=F(Y_f',S_t)$. Because
+$S_t<S_c$ and $Y_f>0$ (by \eqref{eq:r4-1}), the second property gives
+$$
+F(Y_f,S_t)<F(Y_f,S_c)=Y=F(Y_f',S_t).
+$$
+Since $F(\cdot,S_t)$ is increasing, $F(Y_f,S_t)<F(Y_f',S_t)$ requires
+$Y_f<Y_f'$. In words: with fewer target epitopes to absorb antibody in
+the treatment condition, more antibody is left free.
+
+Combining the two facts, $Y_f'>Y_f$ implies $\rho'>\rho$, just as in
+Regime 1. But both lie below 1 (Step 3), so using \eqref{eq:r4-3},
+$$
+0<\rho'-\rho<1-\rho<\frac{K_{d2}}{E_c}\ll1.
+$$
+The difference is negligible: $\rho\approx\rho'\approx1$.
+
+\textbf{Result.} The immunoprecipitation contains
+$A\theta_1:B\theta_1:C\theta_2:D\theta_2=A:B:\rho C:\rho D$, so
+$$
+\text{IP composition}\approx A:B:C:D,
+$$
+which is the same as the input. Because nearly every epitope is captured
+(Step 2), the immunoprecipitation is essentially a copy of the
+epitope-containing chromatin, with no preference for target over
+off-target epitopes.
+
+\subsubsection{ChIP normalization}
+
+We reuse the read model and normalization formulas from Regime 1,
+substituting $\rho\approx\rho'\approx1$.
+
+\textbf{Scaling by spike-in reads (ChIP-Rx).} From Regime 1, the ratio
+between conditions is
+$$
+\frac{n_i'/N_s'}{n_i/N_s}
+=\frac{a_i'}{a_i}\cdot\frac{B+\rho D}{B+\rho' D}.
+$$
+Since $\rho'>\rho$ (Step 5), $B+\rho'D>B+\rho D$, so the bias factor is
+slightly less than 1. To bound how far below 1 it can be, use
+$\rho'<1$ to enlarge the denominator, $B+\rho'D<B+D$, which makes the
+fraction smaller:
+$$\begin{aligned}
+\frac{B+\rho D}{B+\rho' D}
+&>\frac{B+\rho D}{B+D}
+=\frac{(B+D)-(1-\rho)D}{B+D}
+=1-(1-\rho)\frac{D}{B+D}.
+\end{aligned}$$
+Since $D/(B+D)\le1$ and, by \eqref{eq:r4-3}, $1-\rho<K_{d2}/E_c$,
+$$
+1-\frac{K_{d2}}{E_c}<\frac{B+\rho D}{B+\rho' D}<1.
+$$
+So the bias factor is $\approx1$, and \textbf{ChIP-Rx normalization is
+essentially unbiased} at target loci in this idealized model: both
+conditions capture both spike-in epitope classes with the same (nearly
+complete) efficiency, so the spike-in reads track the amount of chromatin
+just as they would in the input.
+
+\textbf{Scaling by total reads (RPM).} Substituting $\rho\approx\rho'\approx1$
+into the Regime 1 ratio,
+$$
+\frac{n_i'/N'}{n_i/N}
+=\frac{a_i'}{a_i}\cdot\frac{A+B+\rho(C+D)}{A'+B+\rho'(C+D)}
+\approx\frac{a_i'}{a_i}\cdot\frac{A+B+C+D}{A'+B+C+D}.
+$$
+If the off-target pool dominates ($C+D\gg A$), the second factor is
+close to 1 and even RPM recovers the global change; the large,
+unchanging off-target pool acts as an internal reference. This is not a
+virtue, as we now see.
+
+\textbf{The cost: loss of specificity.} Let $c_j$ be the off-target
+epitope concentration at an off-target locus $j$. The immunoprecipitation
+contains $a_i\theta_1$ at target locus $i$ and $c_j\theta_2$ at locus
+$j$. Dividing both by $\theta_1$ and substituting $\rho=\theta_2/\theta_1$,
+$$
+\frac{a_i\theta_1}{c_j\theta_2}
+=\frac{a_i}{\rho\,c_j}
+\approx\frac{a_i}{c_j},
+$$
+which is the same ratio as in the input. Compare Regime 1, where
+$\rho\approx r$ boosts target over off-target by a factor $1/r=K_{d2}/K_{d1}\gg1$.
+Here that enrichment is lost entirely. Summing over loci, the fraction
+of IP reads that come from endogenous off-target epitopes is
+$$
+\frac{\rho C}{A+B+\rho(C+D)}\approx\frac{C}{A+B+C+D},
+$$
+and the fraction from all off-target epitopes is approximately
+$(C+D)/(A+B+C+D)$. When off-target epitopes are far more abundant than
+the target (as is typical, e.g., for an antibody that weakly recognizes
+unmodified histones), most reads are off-target and peaks at target loci
+are diluted into the background. Normalization is unbiased, but the
+signal it normalizes is mostly noise.
+
+\textbf{In practice.} This regime is an idealization. Real ChIP
+``background'' includes not only weak antibody-epitope binding (which
+saturates, as modeled here) but also chromatin that sticks
+nonspecifically to beads, tubes, or antibody-bead complexes. That
+background does not follow the binding isotherm $Y_f/(Y_f+K_{d2})$; it
+roughly scales with the amount of input chromatin and need not be the
+same in the endogenous and spike-in chromatin. Moreover, reaching
+$Y>S+C+D+K_{d2}$ requires enormous amounts of antibody when the
+off-target pool is large. The main lesson of this regime is therefore
+not that saturating antibody makes spike-in normalization safe, but that
+adding antibody beyond the point of saturating the target trades
+specificity for (at best) uniform capture: the immunoprecipitation
+increasingly resembles the input.

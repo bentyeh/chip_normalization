@@ -1,0 +1,291 @@
+\subsection{Regime 2: dilute epitopes (no antibody depletion)}
+
+As in Regime 1, let $S_c=A+B$ and $S_t=A'+B$ be the total target-epitope
+concentrations in the control and treatment conditions, and let
+$S\in\{S_c,S_t\}$ denote either one. In Regime 1, antibody was the scarce
+reagent: nearly every antibody molecule found a target, so the amount of
+target captured was fixed at about $Y$ and the \emph{fraction} of target
+captured depended on $S$. Here we consider the opposite situation: the
+epitopes are so dilute that binding them removes only a negligible amount
+of antibody from solution. The free antibody concentration is then set
+by the experimenter ($Y_f\approx Y$) rather than by the chromatin, and,
+as we will see, every capture efficiency becomes independent of $S$.
+
+We assume the following for both conditions (i.e., for each
+$S\in\{S_c,S_t\}$).
+
+\begin{enumerate}
+    \item Target epitopes are dilute relative to $K_{d1}$:
+    $$
+    S\ll K_{d1}.
+    $$
+    To interpret the ratio $S/K_{d1}$, rearrange the mass-action relation
+    $K_{d1}=Y_f(A_f+B_f)/(Y_A+Y_B)$ to give the ratio of target-bound to
+    free antibody:
+    $$
+    \frac{Y_A+Y_B}{Y_f}=\frac{A_f+B_f}{K_{d1}}.
+    $$
+    When the target is unsaturated, nearly all target is free
+    ($A_f+B_f\approx S$), so $S/K_{d1}$ is approximately the ratio of
+    target-bound antibody to free antibody. The assumption therefore says
+    that for every antibody molecule sitting on a target epitope, many more
+    are free in solution. (If the target is partly saturated, fewer target
+    epitopes are free, $A_f+B_f<S$, so $S/K_{d1}$ is an upper bound on this
+    ratio.) Note the contrast with Regime 1, which required the
+    opposite inequality, $K_{d1}\ll S-Y$.
+
+    \item Off-target epitopes are dilute relative to $K_{d2}$:
+    $$
+    C+D\ll K_{d2}.
+    $$
+    By the same logic applied to the off-target mass-action relation,
+    $$
+    \frac{Y_C+Y_D}{Y_f}=\frac{C_f+D_f}{K_{d2}}\le\frac{C+D}{K_{d2}},
+    $$
+    so $(C+D)/K_{d2}$ bounds the ratio of off-target-bound to free
+    antibody. Because $K_{d2}\gg K_{d1}$, this assumption is usually much
+    easier to satisfy than assumption 1: the off-target pool may be far
+    larger than the target pool and still bind little antibody.
+\end{enumerate}
+In summary, the two assumptions say that the two places antibody can go
+other than solution---target and off-target epitopes---each hold a small
+amount of antibody compared with the amount that stays free. Note that
+neither assumption involves $Y$: in this regime, the antibody may be
+limiting, intermediate, or in excess relative to the dissociation
+constants; it is only required to be in excess of what the epitopes can
+soak up. Because $S_t<S_c$ when $A'<A$, the control condition is the more
+demanding one, so it suffices to check the assumptions with $S=S_c$.
+
+We now derive $Y_f$, $\theta_1$, and $\rho$ for either condition. (For the
+treatment condition, $\theta_1$, $\theta_2$, $Y_f$, and $\rho$ should be
+read as their primed counterparts.)
+
+\textbf{Antibody conservation.} As derived in Regime 1, substituting
+$Y_A+Y_B=S\theta_1$ and $Y_C+Y_D=(C+D)\theta_2$ into
+$Y=Y_f+Y_A+Y_B+Y_C+Y_D$ gives
+\begin{equation}
+Y=Y_f+S\theta_1+(C+D)\theta_2.
+\label{eq:r2-1}
+\end{equation}
+
+\textbf{Step 1: bound the antibody on epitopes.} Dropping $Y_f$ from the
+denominator of $\theta_1=Y_f/(Y_f+K_{d1})$ makes the denominator smaller
+and hence the fraction larger:
+$$
+\theta_1=\frac{Y_f}{Y_f+K_{d1}}\le\frac{Y_f}{K_{d1}}.
+$$
+Multiplying both sides by $S$,
+$$
+S\theta_1\le S\frac{Y_f}{K_{d1}}=\frac{S}{K_{d1}}\,Y_f.
+$$
+By the same logic with $\theta_2=Y_f/(Y_f+K_{d2})\le Y_f/K_{d2}$,
+$$
+(C+D)\theta_2\le\frac{C+D}{K_{d2}}\,Y_f.
+$$
+
+\textbf{Step 2: $Y_f\approx Y$.} Define the relative amount of
+epitope-bound antibody
+$$
+\delta=\frac{S\theta_1+(C+D)\theta_2}{Y_f},
+$$
+so that \eqref{eq:r2-1} reads $Y=Y_f+\delta Y_f=Y_f(1+\delta)$. Adding the
+two inequalities from Step 1 and dividing by $Y_f$,
+\begin{equation}
+0\le\delta
+\le\frac{S}{K_{d1}}+\frac{C+D}{K_{d2}}
+\equiv\bar\delta
+\ll1,
+\label{eq:r2-2}
+\end{equation}
+where $\delta\ge0$ because every term is nonnegative, and the final
+$\ll$ follows from assumptions 1 and 2 (a sum of two small numbers is
+small). Solving $Y=Y_f(1+\delta)$ for $Y_f$ and using
+$1\le1+\delta\le1+\bar\delta$,
+\begin{equation}
+\frac{Y}{1+\bar\delta}\le Y_f=\frac{Y}{1+\delta}\le Y.
+\label{eq:r2-3}
+\end{equation}
+Since $\bar\delta\ll1$, $Y_f\approx Y$: the free antibody is essentially
+all of the antibody. (Equivalently, the fraction of antibody that is
+bound, $(Y-Y_f)/Y=\delta/(1+\delta)$, is at most $\bar\delta$.)
+
+\textbf{Step 3: capture efficiencies.} Substituting $Y_f\approx Y$ into
+the expressions for the bound fractions,
+$$
+\theta_1\approx\frac{Y}{Y+K_{d1}},
+\qquad
+\theta_2\approx\frac{Y}{Y+K_{d2}}.
+$$
+Neither depends on $S$. In particular, the fraction of target epitope
+captured is the same in both conditions, so the IP yield \emph{per
+epitope} does not change when the treatment removes target. (The total
+target captured, $S\theta_1$, is proportional to $S$ and so does
+decrease.) This is the key difference from Regime 1, where the total
+captured was fixed at about $Y$ and the per-epitope efficiency
+$\theta_1\approx Y/S$ rose when $S$ fell.
+
+\textbf{Step 4: $\rho$.} Substituting $Y_f\approx Y$ into
+$\rho=(Y_f+K_{d1})/(Y_f+K_{d2})$ gives
+\begin{equation}
+\rho\approx\rho'\approx\bar\rho\equiv\frac{Y+K_{d1}}{Y+K_{d2}}.
+\label{eq:r2-4}
+\end{equation}
+Since $\bar\rho$ depends only on $Y$, $K_{d1}$, and $K_{d2}$---not on
+$S$---it is the same for the control and treatment conditions,
+regardless of $A'$.
+
+To make ``$\approx$'' precise, we bound $\rho$ above and below. First,
+$\rho$ increases with $Y_f$: by the quotient rule,
+$$
+\frac{d\rho}{dY_f}
+=\frac{(Y_f+K_{d2})-(Y_f+K_{d1})}{(Y_f+K_{d2})^2}
+=\frac{K_{d2}-K_{d1}}{(Y_f+K_{d2})^2}
+>0,
+$$
+since $K_{d2}>K_{d1}$. Because $Y_f\le Y$ by \eqref{eq:r2-3}, it follows
+that $\rho\le\bar\rho$. For the lower bound, substitute the lower bound
+$Y_f\ge Y/(1+\bar\delta)$ from \eqref{eq:r2-3} and multiply the numerator
+and denominator by $1+\bar\delta$:
+$$
+\rho
+\ge\frac{\dfrac{Y}{1+\bar\delta}+K_{d1}}{\dfrac{Y}{1+\bar\delta}+K_{d2}}
+=\frac{Y+(1+\bar\delta)K_{d1}}{Y+(1+\bar\delta)K_{d2}}.
+$$
+The numerator is at least $Y+K_{d1}$, and the denominator is at most
+$(1+\bar\delta)Y+(1+\bar\delta)K_{d2}=(1+\bar\delta)(Y+K_{d2})$, so
+$$
+\rho\ge\frac{Y+K_{d1}}{(1+\bar\delta)(Y+K_{d2})}=\frac{\bar\rho}{1+\bar\delta}.
+$$
+Together,
+\begin{equation}
+\frac{\bar\rho}{1+\bar\delta}\le\rho\le\bar\rho,
+\label{eq:r2-5}
+\end{equation}
+so $\rho$ agrees with $\bar\rho$ to within a relative error of at most
+$\bar\delta\ll1$. The same holds for $\rho'$ (with $\bar\delta$ computed
+using $S_t$, which is smaller than with $S_c$).
+
+\textbf{Direction of the (small) difference.} Although $\rho'\approx\rho$,
+the exact values still move in the same direction as in Regime 1. Write
+the right-hand side of \eqref{eq:r2-1} as a function of $Y_f$ and $S$:
+$$
+g(Y_f,S)=Y_f+S\frac{Y_f}{Y_f+K_{d1}}+(C+D)\frac{Y_f}{Y_f+K_{d2}}.
+$$
+Each term increases with $Y_f$ (for instance,
+$\frac{d}{dY_f}\frac{Y_f}{Y_f+K}=\frac{K}{(Y_f+K)^2}>0$), and $g$ increases
+with $S$. If $A'<A$, then $S_t<S_c$, so
+$$
+g(Y_f,S_t)<g(Y_f,S_c)=Y=g(Y_f',S_t).
+$$
+Since $g(\cdot,S_t)$ is increasing, this requires $Y_f<Y_f'$: with less
+target to bind, slightly more antibody stays free. Because $\rho$
+increases with $Y_f$, $\rho<\rho'$. Combining with \eqref{eq:r2-5} for
+both conditions,
+\begin{equation}
+\rho<\rho'\le\bar\rho\le(1+\bar\delta)\rho,
+\label{eq:r2-6}
+\end{equation}
+where $\bar\delta$ is evaluated for the control ($S=S_c$). Thus $\rho'$
+exceeds $\rho$, but by a relative amount of at most $\bar\delta\ll1$.
+
+\textbf{Sub-limits of $\bar\rho$.} Factoring $K_{d1}$ out of the numerator
+and $K_{d2}$ out of the denominator of \eqref{eq:r2-4},
+$$
+\bar\rho
+=\frac{K_{d1}(1+Y/K_{d1})}{K_{d2}(1+Y/K_{d2})}
+=r\,\frac{1+Y/K_{d1}}{1+Y/K_{d2}}.
+$$
+\begin{itemize}
+    \item $Y\ll K_{d1}$ (antibody below the target $K_d$): both
+    $Y/K_{d1}\ll1$ and $Y/K_{d2}\ll1$, so $\bar\rho\approx r$. Both
+    epitope classes are unsaturated, $\theta_1\approx Y/K_{d1}$ and
+    $\theta_2\approx Y/K_{d2}$, and their ratio is set purely by the
+    affinities.
+    \item $K_{d1}\ll Y\ll K_{d2}$: in the numerator,
+    $Y+K_{d1}\approx Y$; in the denominator, $Y+K_{d2}\approx K_{d2}$. So
+    $\bar\rho\approx Y/K_{d2}$. The target is saturated
+    ($\theta_1\approx1$), while off-target binding is still in its linear
+    regime ($\theta_2\approx Y/K_{d2}$), so off-target capture grows in
+    proportion to $Y$ while target capture cannot grow further.
+    \item $Y\gg K_{d2}$: both $Y+K_{d1}\approx Y$ and $Y+K_{d2}\approx Y$,
+    so $\bar\rho\approx1$. Both classes are saturated and the antibody no
+    longer discriminates between them.
+\end{itemize}
+As $Y$ increases, $\bar\rho$ rises monotonically from $r$ to 1 (by the
+same derivative computed above, with $Y$ in place of $Y_f$).
+
+\subsubsection{ChIP normalization}
+
+The read-count expressions derived in Regime 1 (expected reads $n_i$ at
+target locus $i$ and $N_s$ on the spike-in genome) did not use any
+regime-specific assumptions, so they apply here unchanged.
+
+\textbf{Scaling by spike-in reads (ChIP-Rx).} From Regime 1,
+$$
+\frac{n_i'/N_s'}{n_i/N_s}
+=\frac{a_i'}{a_i}\cdot\frac{B+\rho D}{B+\rho' D}.
+$$
+Substituting $\rho\approx\rho'\approx\bar\rho$ from \eqref{eq:r2-4}, the
+numerator and denominator of the bias factor are both approximately
+$B+\bar\rho D$, so
+$$
+\frac{B+\rho D}{B+\rho' D}\approx\frac{B+\bar\rho D}{B+\bar\rho D}=1,
+\qquad
+\frac{n_i'/N_s'}{n_i/N_s}\approx\frac{a_i'}{a_i}.
+$$
+More precisely, by \eqref{eq:r2-6}, $\rho D<\rho' D\le(1+\bar\delta)\rho D$.
+Adding $B$ and using $B\le(1+\bar\delta)B$,
+$$
+B+\rho D<B+\rho' D\le(1+\bar\delta)(B+\rho D),
+$$
+and taking reciprocals and multiplying by $B+\rho D$,
+$$
+\frac{1}{1+\bar\delta}\le\frac{B+\rho D}{B+\rho' D}<1.
+$$
+So spike-in normalization recovers the true fold change to within a
+relative error of at most $\bar\delta$, \emph{even if off-target spike-in
+reads are not negligible} ($\rho D$ comparable to or larger than $B$).
+This contrasts with Regime 1, where the bias factor equals 1 only if
+$\rho D\ll B$. The reason is that in this regime the off-target spike-in
+reads are captured with the same efficiency in both conditions, so they
+scale the spike-in read count by the same factor in both libraries and
+cancel in the ratio. (The direction of the residual bias, $<1$, is the
+same as in Regime 1, but its size is bounded by $\bar\delta$.) Scaling by
+spike-in target reads $N_{s,B}$ also works, as it did in Regime 1.
+
+\textbf{Scaling by total reads (RPM).} From Regime 1, substituting
+$\rho'\approx\rho$,
+$$
+\frac{n_i'/N'}{n_i/N}
+=\frac{a_i'}{a_i}\cdot\frac{A+B+\rho(C+D)}{A'+B+\rho'(C+D)}
+\approx\frac{a_i'}{a_i}\cdot\frac{A+B+\rho(C+D)}{A'+B+\rho(C+D)}.
+$$
+If $A'<A$, the numerator of the second factor exceeds its denominator, so
+the factor is greater than 1 and partially cancels the global decrease
+(fully, $\approx A/A'$, if the spike-in and off-target terms are small).
+RPM normalization still hides global changes in this regime.
+
+\textbf{The cost of this regime.} Dilute epitopes make normalization
+robust, but they come at a price.
+\begin{itemize}
+    \item \emph{Low yield when $Y\ll K_{d1}$.} The fraction of target
+    captured is $\theta_1\approx Y/(Y+K_{d1})\approx Y/K_{d1}\ll1$, and the
+    total target captured is $S\theta_1\approx SY/K_{d1}$, which is small
+    because both $S\ll K_{d1}$ and $Y\ll K_{d1}$. Little DNA is recovered,
+    so libraries have low complexity and are sensitive to contamination.
+    \item \emph{Off-target contamination when $Y$ is raised.} Increasing $Y$
+    to improve yield raises $\bar\rho$ from $r$ toward $Y/K_{d2}$ and
+    eventually 1. Among endogenous reads, the target-to-off-target ratio is
+    $A:\bar\rho C$, so the fraction of endogenous reads that are on target,
+    $$
+    \frac{A}{A+\bar\rho C},
+    $$
+    falls as $Y$ grows. Once $Y\gg K_{d1}$, target capture is saturated
+    ($\theta_1\approx1$), so further increases in $Y$ only add off-target
+    background. Because $\bar\rho$ is the same in both conditions, this
+    background does not bias spike-in normalization at target loci (under
+    the assumption that target and off-target loci do not overlap), but it
+    lowers the signal-to-noise ratio, especially in the treatment
+    condition, where the on-target fraction $A'/(A'+\bar\rho C)$ is
+    smaller because $A'<A$.
+\end{itemize}

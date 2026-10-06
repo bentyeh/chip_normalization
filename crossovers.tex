@@ -1,0 +1,633 @@
+\subsection{Crossovers between regimes}
+
+Regimes 1--4 each describe a limit in which one or two terms of antibody
+conservation dominate. Real experiments need not sit deep inside any one
+limit, and the boundaries between regimes are exactly where the
+treatment and control conditions are most likely to behave differently.
+In this section we first prove a result that holds in \emph{every}
+regime, and then work out the three boundary regions explicitly:
+\begin{itemize}
+    \item the \textbf{equivalence crossover} ($Y\approx S$), between
+    regimes 1 and 3;
+    \item the \textbf{off-target half-saturation crossover}
+    ($Y_f\sim K_{d2}$), between regimes 3 and 4;
+    \item the \textbf{weak-binding crossover} ($K_{d1}\sim S$), between
+    regimes 1 and 2.
+\end{itemize}
+As before, $S\in\{S_c,S_t\}$ with $S_c=A+B$ and $S_t=A'+B$, and
+$r=K_{d1}/K_{d2}$. We abbreviate the off-target pool as $M=C+D$, which is
+the same in both conditions.
+
+\subsubsection{A general principle: less target means more free antibody}
+
+\textbf{Step 1: $\rho$ depends only on $Y_f$, and increases with it.}
+By definition,
+$$
+\rho=\frac{Y_f+K_{d1}}{Y_f+K_{d2}},
+$$
+which involves no concentration other than $Y_f$. Treating $\rho$ as a
+function of $Y_f$ and differentiating with the quotient rule,
+$$
+\frac{d\rho}{dY_f}
+=\frac{1\cdot(Y_f+K_{d2})-(Y_f+K_{d1})\cdot1}{(Y_f+K_{d2})^2}
+=\frac{K_{d2}-K_{d1}}{(Y_f+K_{d2})^2}.
+$$
+Since $K_{d1}<K_{d2}$, the numerator is positive, and the denominator is a
+square, so
+\begin{equation}
+\frac{d\rho}{dY_f}=\frac{K_{d2}-K_{d1}}{(Y_f+K_{d2})^2}>0.
+\label{eq:x-drho}
+\end{equation}
+Thus, \textbf{whichever condition has more free antibody has the larger
+$\rho$}. Intuitively, free antibody is the ``pressure'' that pushes
+antibody onto epitopes. Target epitopes, with their small $K_{d1}$, are
+already mostly occupied at low pressure, so raising the pressure helps
+the weak off-target epitopes more than the target epitopes.
+
+\textbf{Step 2: $Y_f$ is set implicitly by antibody conservation.}
+Substituting $\theta_1=Y_f/(Y_f+K_{d1})$ and $\theta_2=Y_f/(Y_f+K_{d2})$
+into antibody conservation $Y=Y_f+S\theta_1+M\theta_2$ gives
+\begin{equation}
+Y=F(Y_f;S),
+\qquad
+F(y;S)=y+\frac{Sy}{y+K_{d1}}+\frac{My}{y+K_{d2}}.
+\label{eq:x-F}
+\end{equation}
+Here $F(y;S)$ is the total antibody that would be needed to produce a free
+antibody concentration $y$ when the total target is $S$: $y$ free, plus
+$Sy/(y+K_{d1})$ bound to target, plus $My/(y+K_{d2})$ bound off-target.
+We cannot in general solve \eqref{eq:x-F} for $Y_f$ in closed form (after
+clearing denominators it is a cubic), but we can learn a lot from how $F$
+depends on its two arguments.
+
+\emph{$F$ is increasing in $y$.} Each fraction has the form
+$y/(y+K)$, whose derivative by the quotient rule is
+$$
+\frac{d}{dy}\left(\frac{y}{y+K}\right)
+=\frac{1\cdot(y+K)-y\cdot1}{(y+K)^2}
+=\frac{K}{(y+K)^2}.
+$$
+Applying this with $K=K_{d1}$ and $K=K_{d2}$,
+\begin{equation}
+\frac{\partial F}{\partial y}
+=1+\frac{SK_{d1}}{(y+K_{d1})^2}+\frac{MK_{d2}}{(y+K_{d2})^2}
+\ge1>0.
+\label{eq:x-dFdy}
+\end{equation}
+(The symbol $\partial$ means we differentiate with respect to $y$ while
+holding $S$ fixed.) Also $F(0;S)=0$ and $F(y;S)\ge y$, so $F$ climbs
+continuously from $0$ to arbitrarily large values. By the intermediate
+value theorem, for any $Y>0$ there is a solution $Y_f$ of
+$F(Y_f;S)=Y$, and because $F$ is strictly increasing in $y$, it is the only
+one. Moreover, $Y_f>0$, since $F(0;S)=0<Y$.
+
+\emph{$F$ is increasing in $S$.} $S$ appears only in the middle term, so
+$$
+\frac{\partial F}{\partial S}=\frac{y}{y+K_{d1}}=\theta_1>0
+\quad\text{for } y>0.
+$$
+More antibody is needed to reach a given free concentration when there
+is more target to soak it up.
+
+\textbf{Step 3: smaller $S$ gives larger $Y_f$.} Let $Y_f$ and $Y_f'$ be
+the solutions for the control ($S_c$) and treatment ($S_t$), with the same
+$Y$, and suppose $A'<A$, so $S_t<S_c$. Evaluate the treatment's function
+at the control's free antibody. Since only the middle term depends on
+$S$,
+$$
+F(Y_f;S_t)
+=F(Y_f;S_c)-\frac{(S_c-S_t)\,Y_f}{Y_f+K_{d1}}
+=Y-(S_c-S_t)\,\theta_1,
+$$
+where we substituted $F(Y_f;S_c)=Y$ from \eqref{eq:x-F}. The subtracted
+term is positive (because $S_c>S_t$ and $\theta_1>0$), so
+$$
+F(Y_f;S_t)<Y=F(Y_f';S_t).
+$$
+Since $F(\,\cdot\,;S_t)$ is increasing \eqref{eq:x-dFdy}, a smaller output
+requires a smaller input, so $Y_f<Y_f'$. In words: removing target
+epitopes releases the antibody that would have bound them, and the
+system re-equilibrates at a higher free-antibody concentration.
+
+\textbf{Step 4: result.} Combining Step 3 with \eqref{eq:x-drho},
+\begin{equation}
+A'<A
+\quad\Longrightarrow\quad
+Y_f'>Y_f
+\quad\Longrightarrow\quad
+\rho'>\rho.
+\label{eq:x-mono}
+\end{equation}
+This holds in \emph{every} regime, without any approximation. The
+regime-specific formulas only tell us \emph{how much} larger $\rho'$ is:
+in the deep limits of regimes 2 and 4 the difference is negligible
+($\rho'\approx\rho$), whereas near the crossovers below it can be large.
+
+\textbf{How large can the difference be?} The same calculation can be
+phrased with implicit differentiation. Differentiating both sides of
+$Y=F(Y_f(S);S)$ with respect to $S$ (with $Y$ fixed) using the chain rule,
+$$
+0=\frac{\partial F}{\partial y}\frac{dY_f}{dS}+\frac{\partial F}{\partial S},
+\qquad\text{so}\qquad
+\frac{dY_f}{dS}
+=-\frac{\partial F/\partial S}{\partial F/\partial y}
+=-\frac{\theta_1}{\partial F/\partial y}.
+$$
+Since $0<\theta_1\le1$ and $\partial F/\partial y\ge1$ by
+\eqref{eq:x-dFdy}, we get $-1\le dY_f/dS<0$. By the mean value theorem,
+there is some $S^*$ between $S_t$ and $S_c$ with
+$$
+Y_f'-Y_f
+=-\frac{dY_f}{dS}\bigg|_{S^*}\,(S_c-S_t)
+\le S_c-S_t
+=A-A'.
+$$
+That is, removing $A-A'$ target epitopes can raise the free antibody by at
+most $A-A'$ (the released antibody can only be shared out among solution,
+the remaining target, and off-target sites). Applying the mean value
+theorem again, now to $\rho$ as a function of $Y_f$, and bounding the
+derivative \eqref{eq:x-drho} by its largest value (at $Y_f=0$),
+\begin{equation}
+\rho'-\rho
+\le\frac{K_{d2}-K_{d1}}{K_{d2}^2}\,(Y_f'-Y_f)
+\le\frac{(1-r)(A-A')}{K_{d2}}
+<\frac{A-A'}{K_{d2}}.
+\label{eq:x-bound}
+\end{equation}
+So the \emph{absolute} change in $\rho$ is always modest unless
+$A-A'$ is comparable to $K_{d2}$. The \emph{relative} change
+$\rho'/\rho$ can nevertheless be large when $\rho$ itself is small
+($\rho\sim r$) and $Y_f$ is very sensitive to $S$, which is exactly the
+situation near equivalence.
+
+\subsubsection{Equivalence crossover (between regimes 1 and 3)}
+
+Regime 1 required $\sqrt{K_{d1}Y}\ll S-Y$, and regime 3 requires the
+antibody to exceed the target. Between them lies a window around
+$Y\approx S$ where antibody and target \emph{titrate} each other. Define
+the excess target
+$$
+\delta=S-Y,
+$$
+which is positive on the regime-1 side and negative on the regime-3 side.
+
+\textbf{Assumptions.}
+\begin{enumerate}
+    \item Off-target-bound antibody is negligible compared with free
+    antibody: $M\theta_2\ll Y_f$. Since
+    $M\theta_2=MY_f/(Y_f+K_{d2})\le MY_f/K_{d2}$, a sufficient condition
+    is $M\ll K_{d2}$. (We relax this in a remark below.)
+    \item Target binding is tight compared with the amount of target:
+    $K_{d1}\ll S$.
+    \item We are near equivalence: $|\delta|\ll S$.
+    \item Off-target epitopes are far from half-occupied: $Y_f\ll K_{d2}$.
+\end{enumerate}
+
+\textbf{Step 1: an exact quadratic.} Dropping $M\theta_2$ (assumption 1)
+from \eqref{eq:r1-1}, the free target is
+$$
+S(1-\theta_1)=(S-Y)+Y_f=\delta+Y_f,
+$$
+and solving antibody conservation for the bound target gives
+$S\theta_1=Y-Y_f$. The mass-action relation for target,
+$K_{d1}=Y_f(A_f+B_f)/(Y_A+Y_B)$, has free target $A_f+B_f=S(1-\theta_1)$
+and bound target $Y_A+Y_B=S\theta_1$. Substituting both and multiplying
+through by $Y-Y_f$,
+$$
+K_{d1}(Y-Y_f)=Y_f(\delta+Y_f).
+$$
+Expanding and collecting everything on one side,
+\begin{equation}
+Y_f^2+(\delta+K_{d1})Y_f-K_{d1}Y=0.
+\label{eq:x-quad-exact}
+\end{equation}
+Given assumption 1, this is exact; we will reuse it for the weak-binding
+crossover.
+
+\textbf{Step 2: simplify near equivalence.} Two terms in
+\eqref{eq:x-quad-exact} are small corrections near equivalence. First,
+substituting $Y=S-\delta$,
+$$
+K_{d1}Y=K_{d1}S\left(1-\frac{\delta}{S}\right)\approx K_{d1}S
+$$
+by assumption 3. Second, comparing $K_{d1}Y_f$ with $K_{d1}Y$, their ratio
+is $Y_f/Y$, which is $\ll1$ provided $Y_f\ll Y\approx S$ (we verify this in
+Step 4). Dropping $K_{d1}Y_f$ and replacing $K_{d1}Y$ by $K_{d1}S$,
+\begin{equation}
+Y_f\,(Y_f+\delta)\approx K_{d1}S.
+\label{eq:x-quad}
+\end{equation}
+This has a direct interpretation. $Y_f+\delta$ is the free target, and
+nearly all of the $\approx S$ target epitopes are bound, so
+\eqref{eq:x-quad} is just mass action:
+(free antibody)$\times$(free target) $=K_{d1}\times$(bound target).
+
+\textbf{Step 3: solve the quadratic.} Writing \eqref{eq:x-quad} as
+$Y_f^2+\delta Y_f-K_{d1}S=0$, the quadratic formula gives
+$$
+Y_f=\frac{-\delta\pm\sqrt{\delta^2+4K_{d1}S}}{2}.
+$$
+The product of the two roots equals the constant term, $-K_{d1}S<0$, so one
+root is positive and one is negative. Free antibody must be positive, so
+we take the $+$ sign. Multiplying the numerator and denominator by the
+conjugate $\delta+\sqrt{\delta^2+4K_{d1}S}$ and using
+$(\sqrt{\delta^2+4K_{d1}S})^2-\delta^2=4K_{d1}S$ gives an equivalent form
+that is convenient when $\delta>0$:
+\begin{equation}
+Y_f
+=\frac{-\delta+\sqrt{\delta^2+4K_{d1}S}}{2}
+=\frac{2K_{d1}S}{\delta+\sqrt{\delta^2+4K_{d1}S}}.
+\label{eq:x-yf}
+\end{equation}
+The natural scale is $\sqrt{K_{d1}S}$. Writing
+$\delta=x\sqrt{K_{d1}S}$ and dividing \eqref{eq:x-yf} by $\sqrt{K_{d1}S}$,
+\begin{equation}
+\frac{Y_f}{\sqrt{K_{d1}S}}
+=h(x)
+=\frac{-x+\sqrt{x^2+4}}{2}
+=\frac{2}{x+\sqrt{x^2+4}}.
+\label{eq:x-h}
+\end{equation}
+Comparing the two forms of $h$, $h(-x)=(x+\sqrt{x^2+4})/2=1/h(x)$: excess
+target and excess antibody of the same size shift $Y_f$ by the same factor
+in opposite directions.
+
+\textbf{Step 4: the three limits.}
+\begin{itemize}
+    \item \emph{Excess target, $\delta\gg\sqrt{K_{d1}S}$ (regime 1).} Then
+    $4K_{d1}S\ll\delta^2$, so $\sqrt{\delta^2+4K_{d1}S}\approx\delta$.
+    Substituting into the second form of \eqref{eq:x-yf},
+    $$
+    Y_f\approx\frac{2K_{d1}S}{\delta+\delta}=\frac{K_{d1}S}{\delta}
+    =\frac{K_{d1}S}{S-Y}.
+    $$
+    Since $S\approx Y$ (assumption 3), this matches the regime-1 estimate
+    $K_{d1}Y/(S-Y)$ of \eqref{eq:r1-4}. (The exact quadratic
+    \eqref{eq:x-quad-exact} gives $K_{d1}Y/(S-Y+K_{d1})$ in this limit,
+    matching even more closely.)
+    \item \emph{Exact equivalence, $\delta=0$.} Substituting
+    $\delta=0$ into \eqref{eq:x-yf},
+    $$
+    Y_f=\frac{\sqrt{4K_{d1}S}}{2}=\sqrt{K_{d1}S},
+    $$
+    the geometric mean of $K_{d1}$ and $S$, as anticipated in the
+    discussion of regime 1's assumption 2.
+    \item \emph{Excess antibody, $-\delta\gg\sqrt{K_{d1}S}$ (regime 3).}
+    Now $\delta=-|\delta|$ and again $\sqrt{\delta^2+4K_{d1}S}\approx|\delta|$.
+    Substituting into the first form of \eqref{eq:x-yf},
+    $$
+    Y_f\approx\frac{|\delta|+|\delta|}{2}=|\delta|=Y-S.
+    $$
+    The target is saturated, and the excess antibody is free (it has
+    nowhere else to go, since off-target binding is negligible).
+\end{itemize}
+We can now verify the claim $Y_f\ll S$ used in Step 2. Using
+$\sqrt{a+b}\le\sqrt a+\sqrt b$ for $a,b\ge0$ in the first form of
+\eqref{eq:x-yf},
+$$
+Y_f\le\frac{-\delta+|\delta|+2\sqrt{K_{d1}S}}{2}\le|\delta|+\sqrt{K_{d1}S}.
+$$
+Here $|\delta|\ll S$ by assumption 3, and $\sqrt{K_{d1}S}\ll S$ because,
+dividing by $\sqrt S$, it is equivalent to $\sqrt{K_{d1}}\ll\sqrt S$, i.e.,
+assumption 2. So $Y_f\ll S$.
+
+\textbf{Step 5: $\rho$.} By assumption 4, $Y_f+K_{d2}\approx K_{d2}$, so
+\begin{equation}
+\rho
+=\frac{Y_f+K_{d1}}{Y_f+K_{d2}}
+\approx\frac{Y_f+K_{d1}}{K_{d2}}
+=r\left(1+\frac{Y_f}{K_{d1}}\right),
+\label{eq:x-rho-eq}
+\end{equation}
+where the last step factors out $K_{d1}/K_{d2}=r$. Substituting the three
+limits of Step 4:
+$$
+\rho\approx
+\begin{cases}
+r\left(1+\dfrac{S}{S-Y}\right)\approx r\dfrac{S}{S-Y}, & S-Y\gg\sqrt{K_{d1}S}
+\quad\text{(regime 1)},\\[2ex]
+r\left(1+\sqrt{\dfrac{S}{K_{d1}}}\right)\approx\dfrac{\sqrt{K_{d1}S}}{K_{d2}}, & Y=S,\\[2ex]
+r+\dfrac{Y-S}{K_{d2}}, & Y-S\gg\sqrt{K_{d1}S}
+\quad\text{(regime 3, }M\ll K_{d2}\text{)}.
+\end{cases}
+$$
+(In the first line, $S/(S-Y)\gg1$ near equivalence, so the $1$ is
+negligible; in the second, $\sqrt{S/K_{d1}}\gg1$ by assumption 2.)
+Through the window, $\rho$ climbs from about $r\,S/(S-Y)$ to about
+$(Y-S)/K_{d2}$, and the climb happens over a range of $Y$ of width a few
+times $\sqrt{K_{d1}S}$, i.e., a \emph{relative} width of order
+$\sqrt{K_{d1}S}/S=\sqrt{K_{d1}/S}\ll1$. For example, by \eqref{eq:x-h},
+moving from $x=2$ to $x=-2$ multiplies $Y_f$ by
+$h(-2)/h(2)=1/h(2)^2=(1+\sqrt2)^2\approx5.8$; moving from $x=4$ to $x=-4$
+multiplies it by $\bigl((4+\sqrt{20})/2\bigr)^2\approx18$.
+
+\textbf{$\rho'$ versus $\rho$.} The treatment has
+$\delta_t=S_t-Y=\delta_c-(A-A')<\delta_c$. In \eqref{eq:x-yf} (second
+form), the denominator $\delta+\sqrt{\delta^2+4K_{d1}S}$ is increasing in
+$\delta$, since its derivative is
+$1+\delta/\sqrt{\delta^2+4K_{d1}S}>0$ (because
+$|\delta|<\sqrt{\delta^2+4K_{d1}S}$). So decreasing $\delta$ increases
+$Y_f$, and by \eqref{eq:x-rho-eq}, $\rho'>\rho$, as guaranteed in general by
+\eqref{eq:x-mono}. Because $\rho\propto Y_f+K_{d1}$ here, the ratio is
+$$
+\frac{\rho'}{\rho}\approx\frac{Y_f'+K_{d1}}{Y_f+K_{d1}},
+$$
+which is a ratio of free-antibody concentrations. If the drop $A-A'$ is
+large enough to carry the treatment across the window while the control
+stays on the regime-1 side, this ratio is approximately
+$(Y-S_t)\big/\bigl(K_{d1}S_c/(S_c-Y)\bigr)$, which can be enormous because
+$K_{d1}$ is small. Equivalently, bound \eqref{eq:x-bound} gives
+$\rho'/\rho\le1+(A-A')/(Y_f+K_{d1})$, which is large when $A-A'$ exceeds
+the free antibody $\sim\sqrt{K_{d1}S}$.
+
+\textbf{Numerical illustration.} Take $K_{d1}=0.1$~nM, $K_{d2}=1000$~nM
+($r=10^{-4}$), $A=90$~nM, $B=10$~nM, $M\ll K_{d2}$, and a treatment that
+removes about 11\% of the target, $A'=80$~nM. Then $S_c=100$~nM and
+$S_t=90$~nM, and $\sqrt{K_{d1}S}\approx3$~nM.
+\begin{itemize}
+    \item With $Y=95$~nM, $\delta_c=5$~nM and $\delta_t=-5$~nM. Substituting
+    into \eqref{eq:x-yf},
+    $$
+    \begin{gathered}
+    Y_f\approx\frac{-5+\sqrt{25+4(0.1)(100)}}{2}=\frac{-5+8.06}{2}\approx1.53~\text{nM},\\
+    Y_f'\approx\frac{5+\sqrt{25+4(0.1)(90)}}{2}=\frac{5+7.81}{2}\approx6.41~\text{nM}.
+    \end{gathered}
+    $$
+    By \eqref{eq:x-rho-eq}, $\rho\approx1.63/1000=1.6\times10^{-3}$ and
+    $\rho'\approx6.51/1000=6.5\times10^{-3}$, so $\rho'/\rho\approx4$.
+    (Solving \eqref{eq:x-F} numerically gives $\rho'/\rho\approx4.2$.)
+    \item With $Y=50$~nM (deep in regime 1), the same 11\% drop gives
+    $\rho'/\rho\approx\dfrac{90/40}{100/50}=1.125$.
+\end{itemize}
+An 11\% change in target abundance produces a fourfold change in the
+relative off-target capture efficiency when the antibody is titrated near
+equivalence, but only a 12.5\% change when the antibody is at half the
+target concentration.
+
+\textbf{Remark: an off-target sink.} If $M$ is not small compared with
+$K_{d2}$ but off-target sites are still unsaturated ($Y_f\ll K_{d2}$), then
+$M\theta_2\approx MY_f/K_{d2}$, and the antibody not on target is
+$$
+U=Y_f+M\theta_2\approx gY_f,
+\qquad
+g=1+\frac{M}{K_{d2}}.
+$$
+Repeating Step 1 with $U$ in place of $Y_f$ in \eqref{eq:r1-1} and
+in antibody conservation, the free target is $\delta+U$ and the bound target
+is $Y-U$, so mass action reads $K_{d1}(Y-U)=Y_f(\delta+U)$. Multiplying both
+sides by $g$ and substituting $gY_f=U$,
+$$
+gK_{d1}(Y-U)=U(\delta+U).
+$$
+This is \eqref{eq:x-quad-exact} with $Y_f\to U$ and $K_{d1}\to gK_{d1}$.
+All the results above carry over with these replacements; in particular,
+$U\approx\sqrt{gK_{d1}S}$ at equivalence and $Y_f=U/g$. The off-target pool
+acts as a buffer that soaks up a fixed fraction $1-1/g$ of the antibody not
+on target, and it widens the window to $\sqrt{gK_{d1}S}$, which makes the
+crossover less sharp.
+
+\subsubsection{Off-target half-saturation crossover (between regimes 3 and 4)}
+
+Once $Y-S\gg\sqrt{K_{d1}S}$, the target is saturated and the remaining
+question is how the excess antibody distributes between solution and
+off-target epitopes. Define the excess antibody
+$$
+E=Y-S>0.
+$$
+
+\textbf{Assumption.} The target is saturated: the free target
+$S(1-\theta_1)=SK_{d1}/(Y_f+K_{d1})$ is negligible compared with $E$. In this
+crossover $Y_f\sim K_{d2}\gg K_{d1}$, so the free target is about
+$SK_{d1}/K_{d2}=rS$, and the assumption amounts to $rS\ll Y-S$.
+
+\textbf{Step 1: a quadratic for $Y_f$.} Saturation means
+$S\theta_1=S-S(1-\theta_1)\approx S$. Substituting this and
+$\theta_2=Y_f/(Y_f+K_{d2})$ into antibody conservation,
+$Y=Y_f+S+MY_f/(Y_f+K_{d2})$, and subtracting $S$ from both sides,
+$$
+E=Y_f+\frac{MY_f}{Y_f+K_{d2}}.
+$$
+In words, the excess antibody is either free or bound off-target.
+Multiplying both sides by $Y_f+K_{d2}$,
+$$
+EY_f+EK_{d2}=Y_f^2+K_{d2}Y_f+MY_f,
+$$
+and collecting terms on one side,
+\begin{equation}
+Y_f^2+bY_f-EK_{d2}=0,
+\qquad
+b=K_{d2}+M-E.
+\label{eq:x-quad-c}
+\end{equation}
+
+\textbf{Step 2: solve.} The product of the roots is $-EK_{d2}<0$, so there
+is exactly one positive root. By the quadratic formula, and rationalizing
+as in \eqref{eq:x-yf},
+\begin{equation}
+Y_f
+=\frac{-b+\sqrt{b^2+4EK_{d2}}}{2}
+=\frac{2EK_{d2}}{b+\sqrt{b^2+4EK_{d2}}},
+\qquad
+\rho=\frac{Y_f+K_{d1}}{Y_f+K_{d2}}\approx\frac{Y_f}{Y_f+K_{d2}},
+\label{eq:x-yf-c}
+\end{equation}
+where the last approximation uses $K_{d1}\ll Y_f$.
+
+\textbf{Step 3: the limits.}
+\begin{itemize}
+    \item \emph{Small excess, $E\ll K_{d2}+M$ (regime 3).} Then
+    $b\approx K_{d2}+M>0$ and $4EK_{d2}\le4E(K_{d2}+M)\ll b^2$, so
+    $\sqrt{b^2+4EK_{d2}}\approx b$. Substituting into the second form of
+    \eqref{eq:x-yf-c},
+    $$
+    Y_f\approx\frac{2EK_{d2}}{2b}\approx\frac{K_{d2}(Y-S)}{K_{d2}+M}.
+    $$
+    This is $\ll K_{d2}$, so $\rho\approx(Y_f+K_{d1})/K_{d2}$; substituting
+    $Y_f$ gives $\rho\approx r+(Y-S)/(K_{d2}+C+D)$, the regime-3 result.
+    \item \emph{Large excess, $E\gg K_{d2}+M$ (regime 4).} Now
+    $b=-(E-M-K_{d2})$ is large and negative. Factoring out $|b|$ and using
+    the linear approximation $\sqrt{1+u}\approx1+u/2$ for small $u$,
+    $$
+    \sqrt{b^2+4EK_{d2}}
+    =|b|\sqrt{1+\frac{4EK_{d2}}{b^2}}
+    \approx|b|+\frac{2EK_{d2}}{|b|}
+    \approx|b|+2K_{d2},
+    $$
+    where the last step uses $E/|b|\approx1$. Substituting into the first form
+    of \eqref{eq:x-yf-c},
+    $$
+    Y_f\approx\frac{|b|+|b|+2K_{d2}}{2}=|b|+K_{d2}=E-M=Y-S-(C+D).
+    $$
+    All epitopes are saturated and the leftover antibody is free. Then
+    $\rho\approx(E-M)/(E-M+K_{d2})\to1$ when $E-M\gg K_{d2}$, the regime-4
+    result.
+    \item \emph{Half-saturation.} $\rho\approx1/2$ when $Y_f=K_{d2}$, i.e.,
+    when off-target epitopes are half occupied. Rather than solving
+    \eqref{eq:x-quad-c}, substitute $Y_f=K_{d2}$ directly into
+    $E=Y_f+MY_f/(Y_f+K_{d2})$:
+    $$
+    E_{1/2}=K_{d2}+\frac{M}{2},
+    \qquad\text{i.e.,}\qquad
+    Y=S+K_{d2}+\frac{C+D}{2}.
+    $$
+    The antibody must cover the target ($S$), half of the off-target pool
+    ($M/2$), and leave $K_{d2}$ free.
+\end{itemize}
+
+\textbf{Two shapes of crossover.} The size of $M$ relative to $K_{d2}$
+controls how the transition looks.
+\begin{itemize}
+    \item If $M\ll K_{d2}$, set $M=0$ in \eqref{eq:x-quad-c}:
+    $Y_f^2+(K_{d2}-E)Y_f-EK_{d2}=0$. This factors as
+    $(Y_f-E)(Y_f+K_{d2})=0$ (check by expanding:
+    $Y_f^2+K_{d2}Y_f-EY_f-EK_{d2}$), so $Y_f=E$ and
+    $$
+    \rho\approx\frac{(Y-S)+K_{d1}}{(Y-S)+K_{d2}}.
+    $$
+    This is a gentle hyperbola: $\rho$ rises from $0.09$ to $0.91$ as
+    $Y-S$ goes from $0.1K_{d2}$ to $10K_{d2}$, spanning two orders of
+    magnitude.
+    \item If $M\gg K_{d2}$, then \eqref{eq:x-quad-c} has exactly the form of
+    \eqref{eq:x-quad-exact} with $Y_f$ unchanged, $K_{d1}\to K_{d2}$,
+    $\delta\to M-E$, and $Y\to E$. So the antibody titrates the off-target
+    pool the way it titrated the target in the equivalence crossover: there
+    is a ``second equivalence'' at $E\approx M$ with window width
+    $\sqrt{K_{d2}M}$. Half-saturation ($E=K_{d2}+M/2$) occurs before this
+    second equivalence, and by $E=M$ we already have
+    $Y_f\approx\sqrt{K_{d2}M}\gg K_{d2}$, so $\rho$ is close to 1.
+\end{itemize}
+
+\textbf{$\rho'$ versus $\rho$.} Because the target is saturated, $S$ enters
+only through $E=Y-S$, and the treatment has
+$E'=E+(A-A')>E$. Differentiating $E=Y_f+MY_f/(Y_f+K_{d2})$ implicitly with
+respect to $E$,
+$$
+1=\frac{dY_f}{dE}\left(1+\frac{MK_{d2}}{(Y_f+K_{d2})^2}\right),
+\qquad\text{so}\qquad
+0<\frac{dY_f}{dE}\le1.
+$$
+Thus $Y_f'>Y_f$ and $\rho'>\rho$, as \eqref{eq:x-mono} requires. But the
+effect is small. Near half-saturation, \eqref{eq:x-drho} with $Y_f=K_{d2}$
+gives $d\rho/dY_f\approx K_{d2}/(2K_{d2})^2=1/(4K_{d2})$, so by the chain rule
+$$
+\rho'-\rho
+\approx\frac{d\rho}{dY_f}\cdot\frac{dY_f}{dE}\cdot(A-A')
+\le\frac{A-A'}{4K_{d2}},
+\qquad
+\frac{\rho'}{\rho}\lesssim1+\frac{A-A'}{2K_{d2}},
+$$
+using $\rho\approx1/2$ in the second expression. Unlike near equivalence,
+$\rho$ is not small here, so a small absolute change in $\rho$ cannot become
+a large relative change. With the parameters of the earlier illustration
+and $C=D=1000$~nM, taking $Y=2500$~nM gives (numerically) $\rho\approx0.561$
+and $\rho'\approx0.562$.
+
+\subsubsection{Weak-binding crossover (between regimes 1 and 2)}
+
+When $K_{d1}$ is comparable to $S$, neither ``all target bound'' nor
+``almost no antibody bound'' holds. Clearing the denominators of
+\eqref{eq:x-F} by multiplying both sides by $(Y_f+K_{d1})(Y_f+K_{d2})$,
+$$
+Y(Y_f+K_{d1})(Y_f+K_{d2})
+=Y_f(Y_f+K_{d1})(Y_f+K_{d2})+SY_f(Y_f+K_{d2})+MY_f(Y_f+K_{d1}),
+$$
+which is a cubic in $Y_f$. Its formula is not illuminating, so in practice
+one solves it numerically (Step 2 of the general principle guarantees a
+unique positive solution). Two observations remove most of the need to do
+so.
+
+First, if off-target-bound antibody is negligible ($M\ll K_{d2}$), the
+derivation of \eqref{eq:x-quad-exact} never used $K_{d1}\ll S$, so with
+$\delta=S-Y$,
+$$
+Y_f=\frac{-(S-Y+K_{d1})+\sqrt{(S-Y+K_{d1})^2+4K_{d1}Y}}{2},
+\qquad
+\rho=\frac{Y_f+K_{d1}}{Y_f+K_{d2}}
+$$
+is exact across the whole crossover. (If $M$ is not negligible but
+off-target sites are unsaturated, the remark on the off-target sink applies.)
+
+Second, the regime-2 limit follows directly from conservation. Since
+$\theta_1=Y_f/(Y_f+K_{d1})\le Y_f/K_{d1}$ and $Y_f\le Y$, the antibody bound
+to target satisfies
+$$
+Y-Y_f\approx S\theta_1\le\frac{SY_f}{K_{d1}}\le\frac{S}{K_{d1}}\,Y,
+$$
+which is $\ll Y$ when $S\ll K_{d1}$, giving $Y_f\approx Y$. As $S/K_{d1}$
+grows toward 1, a growing fraction of antibody is captured by the target,
+$Y_f$ drops below $Y$, and $\rho$ drops from $(Y+K_{d1})/(Y+K_{d2})$ toward
+regime 1's $r\,S/(S-Y)$ (if $Y<S$) or toward the equivalence or regime-3
+behavior (if $Y\gtrsim S$). Throughout, \eqref{eq:x-mono} still guarantees
+$\rho'>\rho$ when $A'<A$. The difference is small near regime 2: from the
+implicit derivative in the general principle, $|dY_f/dS|\le\theta_1\le
+Y_f/K_{d1}$, which is small when $Y_f\ll K_{d1}$.
+
+\subsubsection{ChIP normalization}
+
+From Regime 1's ChIP normalization, scaling by total spike-in reads
+(ChIP-Rx) gives
+$$
+\frac{n_i'/N_s'}{n_i/N_s}
+=\frac{a_i'}{a_i}\cdot\beta,
+\qquad
+\beta=\frac{B+\rho D}{B+\rho' D}.
+$$
+That derivation used only the read model, not any regime-specific
+approximation for $\rho$, so it holds everywhere.
+
+\textbf{The bias never favors the treatment.} By \eqref{eq:x-mono},
+$\rho'>\rho$ whenever $A'<A$. Multiplying by $D\ge0$ and adding $B$,
+$$
+B+\rho' D\ge B+\rho D>0,
+$$
+so dividing both sides by $B+\rho'D$ gives $\beta\le1$, with equality only
+if $D=0$ (or approximately, in the deep limits where $\rho'\approx\rho$). The
+measured fold change is the true fold change multiplied by $\beta\le1$.
+For a global decrease, $a_i'/a_i<1$, so the measured value is even smaller:
+\textbf{ChIP-Rx with total spike-in reads never understates, and generally
+overstates, a global decrease}, in every regime. (Equivalently, every locus
+in the treatment is biased downward by the same factor $\beta$.)
+
+\textbf{How large can the bias be?} Compare $\beta$ with $\rho/\rho'$.
+Putting both over a common denominator,
+$$
+\beta-\frac{\rho}{\rho'}
+=\frac{\rho'(B+\rho D)-\rho(B+\rho' D)}{\rho'(B+\rho' D)}
+=\frac{\rho' B+\rho\rho' D-\rho B-\rho\rho' D}{\rho'(B+\rho' D)}
+=\frac{B(\rho'-\rho)}{\rho'(B+\rho' D)}
+\ge0.
+$$
+Therefore
+$$
+\frac{\rho}{\rho'}\le\beta\le1.
+$$
+The bias approaches its worst case $\rho/\rho'$ when $\rho'D\gg B$, i.e.,
+when most spike-in reads come from off-target spike-in epitopes, and
+vanishes when $\rho'D\ll B$. Combined with the results above:
+\begin{itemize}
+    \item Deep in regimes 1 (with $Y\ll S$), 2, and 4, $\rho'\approx\rho$,
+    so $\beta\approx1$.
+    \item Near equivalence, $\rho'/\rho$ can be large (fourfold in the
+    illustration), so $\beta$ can be far below 1 if $\rho'D$ is comparable
+    to or larger than $B$. This is where the bias is largest.
+    \item Near off-target half-saturation, $\rho'/\rho\lesssim1+(A-A')/(2K_{d2})$,
+    so $\beta$ is close to 1 unless $A-A'$ is comparable to $K_{d2}$.
+\end{itemize}
+
+\textbf{Numerical illustration.} Use $K_{d1}=0.1$~nM, $K_{d2}=1000$~nM,
+$A=90$~nM, $A'=80$~nM, $B=10$~nM, and now a substantial off-target pool
+$C=D=1000$~nM (so $g=3$ in the off-target-sink remark). The true global fold
+change is $80/90\approx0.89$. Solving \eqref{eq:x-F} numerically:
+\begin{itemize}
+    \item $Y=50$~nM (regime 1): $\beta\approx0.998$.
+    \item $Y=95$~nM (near equivalence): $\rho\approx1.20\times10^{-3}$,
+    $\rho'\approx2.82\times10^{-3}$, so $\rho D\approx1.2$~nM and
+    $\rho'D\approx2.8$~nM, giving $\beta\approx11.2/12.8\approx0.87$. The
+    measured fold change is $0.89\times0.87\approx0.78$. Scanning $Y$, the
+    smallest $\beta$ ($\approx0.83$) occurs at $Y\approx107$~nM, just past
+    equivalence (the off-target sink shifts it slightly).
+    \item $Y=2500$~nM (off-target half-saturation): $\beta\approx0.998$.
+\end{itemize}
+As in Regime 1, counting only reads at the spike-in's target loci
+($N_{s,B}$) removes the dependence on $\rho$ and $\rho'$ entirely, and
+therefore removes this bias in every regime.

@@ -1,0 +1,522 @@
+\subsection{Regime 3: antibody in excess of target}
+
+As in Regime 1, let $S_c=A+B$ and $S_t=A'+B$ be the total target-epitope
+concentrations in the control and treatment conditions, and let
+$S\in\{S_c,S_t\}$ denote either one. We assume the following for both
+conditions (i.e., for each $S\in\{S_c,S_t\}$).
+
+The assumptions are again easiest to interpret through a heuristic
+estimate of the free-antibody concentration. Now there is more antibody
+than target. If nearly every target epitope is bound, then about $S$
+antibody molecules sit on target, and the excess $Y-S$ must go somewhere
+else: either into solution ($Y_f$) or onto off-target epitopes
+($Y_C+Y_D$). If off-target epitopes are far from saturated, nearly all of
+them are free ($C_f+D_f\approx C+D$), so rearranging the mass-action
+relation $K_{d2}=Y_f(C_f+D_f)/(Y_C+Y_D)$ gives
+$$
+Y_C+Y_D
+=\frac{Y_f(C_f+D_f)}{K_{d2}}
+\approx\frac{Y_f(C+D)}{K_{d2}}.
+$$
+Substituting this into ``excess $=$ free $+$ off-target-bound,''
+$$
+Y-S
+\approx Y_f+\frac{Y_f(C+D)}{K_{d2}}
+=Y_f\cdot\frac{K_{d2}+C+D}{K_{d2}},
+$$
+and multiplying both sides by $K_{d2}/(K_{d2}+C+D)$,
+$$
+Y_f\approx K_{d2}\frac{Y-S}{K_{d2}+C+D}.
+$$
+In words, the excess antibody is split between solution and off-target
+epitopes in the ratio $K_{d2}:(C+D)$. Below, we show that this estimate
+is in fact an exact lower bound on $Y_f$.
+
+\begin{enumerate}
+    \item Antibody is more abundant than target epitope:
+    $$
+    Y>S.
+    $$
+    Thus, even if every target epitope is bound, there is a positive
+    excess $Y-S$ of antibody left over.
+
+    \item Free target is scarce relative to the excess antibody:
+    $$
+    rS\,(K_{d2}+C+D)\ll(Y-S)^2.
+    $$
+    To interpret this, estimate the free target concentration
+    $A_f+B_f$. Rearranging the mass-action relation
+    $K_{d1}=Y_f(A_f+B_f)/(Y_A+Y_B)$, and using that about $S$ target
+    epitopes are bound,
+    $$
+    A_f+B_f
+    =K_{d1}\frac{Y_A+Y_B}{Y_f}
+    \approx\frac{K_{d1}S}{Y_f}.
+    $$
+    Substituting the heuristic estimate of $Y_f$ and then
+    $r=K_{d1}/K_{d2}$,
+    $$
+    A_f+B_f
+    \approx\frac{K_{d1}S\,(K_{d2}+C+D)}{K_{d2}(Y-S)}
+    =\frac{rS\,(K_{d2}+C+D)}{Y-S}.
+    $$
+    Dividing both sides of the condition by $Y-S$ shows that it is
+    equivalent to
+    $rS(K_{d2}+C+D)/(Y-S)\ll Y-S$: the estimated free target is much less
+    than the excess antibody. This matters because every target epitope
+    that is free leaves one more antibody molecule unaccounted for, so the
+    antibody available to go into solution or off-target stays close to
+    $Y-S$ only if the free target is small compared with $Y-S$. Usually
+    this also means that the target is nearly saturated
+    ($\theta_1\approx1$). The square arises because $Y-S$ appears twice:
+    once in the estimate of the free target (more excess antibody drives
+    more target into the bound state) and once as the yardstick against
+    which the free target is compared.
+
+    \textbf{Mirror symmetry with Regime 1.} Substituting
+    $r=K_{d1}/K_{d2}$ and splitting the fraction, the left-hand side is
+    $$
+    rS\,(K_{d2}+C+D)
+    =\frac{K_{d1}}{K_{d2}}S\,(K_{d2}+C+D)
+    =K_{d1}S\left(1+\frac{C+D}{K_{d2}}\right).
+    $$
+    If there were no off-target epitopes ($C+D=0$), the condition would
+    read $K_{d1}S\ll(Y-S)^2$. Compare Regime 1's assumption 2,
+    $K_{d1}Y\ll(S-Y)^2$: the two are identical after swapping $Y$ and
+    $S$. This is because the mass-action relation
+    $K_{d1}=Y_f(A_f+B_f)/(Y_A+Y_B)$ treats antibody and target
+    symmetrically. In Regime 1, antibody is the limiting species and target
+    is in excess; in Regime 3, the roles are reversed. In both cases the
+    condition says that the leftover \emph{limiting} species (free antibody
+    in Regime 1, free target here) is much less than the excess of the
+    \emph{abundant} species. The extra factor $1+(C+D)/K_{d2}$ breaks the
+    symmetry: off-target epitopes are a sink for antibody but not for
+    target, so only a fraction $K_{d2}/(K_{d2}+C+D)$ of the excess
+    antibody remains free to drive target binding. A weaker push on the
+    target requires a larger excess to compensate.
+
+    Formally, below we show that $S(1-\theta_1)\le rS(K_{d2}+C+D)/(Y-S)$,
+    so this condition makes the free target negligible relative to $Y-S$.
+
+    \item Off-target epitopes are far from saturated:
+    $$
+    Y-S\ll K_{d2}+C+D.
+    $$
+    By the heuristic estimate, the off-target occupancy is
+    $$
+    \theta_2=\frac{Y_f}{Y_f+K_{d2}}\approx\frac{Y_f}{K_{d2}}
+    \approx\frac{Y-S}{K_{d2}+C+D},
+    $$
+    so this condition says that the fraction of off-target epitopes that
+    are bound is small. Another way to see the yardstick
+    $K_{d2}+C+D$: to half-occupy the off-target epitopes, the free antibody
+    must reach $K_{d2}$ and about $(C+D)/2$ antibody molecules must be bound
+    off-target, for a total of about $K_{d2}+(C+D)/2$, which is within a
+    factor of 2 of $K_{d2}+C+D$. The condition says that the excess
+    antibody is far below this amount. Below, we show that this condition
+    implies $Y_f\ll K_{d2}$.
+\end{enumerate}
+In summary, assumption 2 ensures that essentially all of the excess
+antibody $Y-S$ is available to the ``non-target'' compartments (solution
+and off-target epitopes), and assumption 3 keeps the off-target epitopes
+in their unsaturated, linear-response regime. Compared with Regime 1,
+there is no separate assumption limiting off-target binding: here,
+off-target binding is not a perturbation to be neglected but one of the
+two places where the excess antibody goes.
+
+\textbf{Simpler sufficient condition.} Suppose $Y\ge2S$. Subtracting $S$
+from both sides gives $Y-S\ge S$, and since $Y-S>0$ by assumption 1,
+dividing both sides by $Y-S$ gives
+$$
+\frac{S}{Y-S}\le1.
+$$
+Writing the left-hand side of assumption 2, divided by $(Y-S)^2$, as a
+product,
+$$
+\frac{rS\,(K_{d2}+C+D)}{(Y-S)^2}
+=\frac{r(K_{d2}+C+D)}{Y-S}\cdot\frac{S}{Y-S}
+\le\frac{r(K_{d2}+C+D)}{Y-S}.
+$$
+Therefore, if $r(K_{d2}+C+D)\ll Y-S$, then assumption 2 holds. When $Y$
+approaches $S$, however, the factor $S/(Y-S)$ grows without bound, and
+the simpler condition is no longer sufficient.
+
+We now derive $\rho$ for either condition. (For the treatment condition,
+$\theta_1$, $\theta_2$, $Y_f$, and $\rho$ should be read as their primed
+counterparts.)
+
+\textbf{Antibody conservation.} As in Regime 1,
+$$
+Y=Y_f+S\theta_1+(C+D)\theta_2.
+$$
+
+\textbf{Step 1: $\rho$ in terms of $\theta_2$.} Substituting
+$K_{d1}=rK_{d2}$ into the numerator of $\rho$, and then adding and
+subtracting $rY_f$,
+$$\begin{aligned}
+\rho
+&=\frac{Y_f+K_{d1}}{Y_f+K_{d2}}
+=\frac{Y_f+rK_{d2}}{Y_f+K_{d2}} \\
+&=\frac{r(Y_f+K_{d2})+Y_f-rY_f}{Y_f+K_{d2}} \\
+&=r+(1-r)\frac{Y_f}{Y_f+K_{d2}}.
+\end{aligned}$$
+Recognizing $\theta_2=Y_f/(Y_f+K_{d2})$,
+\begin{equation}
+\rho=r+(1-r)\,\theta_2.
+\label{eq:r3-1}
+\end{equation}
+This is exact and holds in every regime. It says that $\rho$ interpolates
+linearly between $r$ (no off-target occupancy) and 1 (full off-target
+occupancy). So it remains to find $\theta_2$.
+
+\textbf{Step 2: where the excess antibody goes.} Write the
+target-bound antibody as total target minus free target,
+$S\theta_1=S-S(1-\theta_1)$. Substituting into antibody conservation,
+$$
+Y=Y_f+S-S(1-\theta_1)+(C+D)\theta_2.
+$$
+Subtracting $S$ from both sides and adding $S(1-\theta_1)$ to both sides,
+\begin{equation}
+(Y-S)+S(1-\theta_1)=Y_f+(C+D)\theta_2.
+\label{eq:r3-2}
+\end{equation}
+Intuitively, the antibody not on target (right-hand side) equals the
+excess antibody $Y-S$ plus one antibody for each target epitope that is
+left free. This is the mirror image of Regime 1's equation
+\eqref{eq:r1-1}.
+
+\textbf{Step 3: an exact expression for $\theta_2$.} From
+$\theta_2=Y_f/(Y_f+K_{d2})$, multiplying both sides by $Y_f+K_{d2}$ gives
+$Y_f=\theta_2(Y_f+K_{d2})$. Substituting this into the right-hand side of
+\eqref{eq:r3-2} and factoring out $\theta_2$,
+$$
+(Y-S)+S(1-\theta_1)
+=\theta_2(Y_f+K_{d2})+(C+D)\theta_2
+=\theta_2\,(K_{d2}+C+D+Y_f).
+$$
+Dividing both sides by $K_{d2}+C+D+Y_f$,
+$$
+\theta_2=\frac{(Y-S)+S(1-\theta_1)}{K_{d2}+C+D+Y_f}.
+$$
+Factoring $Y-S$ out of the numerator and $K_{d2}+C+D$ out of the
+denominator,
+\begin{equation}
+\theta_2
+=\frac{Y-S}{K_{d2}+C+D}\cdot\frac{1+\delta_1}{1+\delta_2},
+\qquad
+\delta_1=\frac{S(1-\theta_1)}{Y-S},
+\quad
+\delta_2=\frac{Y_f}{K_{d2}+C+D}.
+\label{eq:r3-3}
+\end{equation}
+Equations \eqref{eq:r3-1} and \eqref{eq:r3-3} together are exact. Here
+$\delta_1$ is the free target relative to the excess antibody, and
+$\delta_2$ is the free antibody relative to $K_{d2}+C+D$. It remains to
+show that $\delta_1\ll1$ and $\delta_2\ll1$.
+
+\textbf{Step 4: a lower bound on $Y_f$.} Because $S(1-\theta_1)\ge0$,
+equation \eqref{eq:r3-2} gives
+$$
+Y_f+(C+D)\theta_2\ge Y-S.
+$$
+Dropping $Y_f$ from the denominator of $\theta_2$ makes it larger, so
+$\theta_2=Y_f/(Y_f+K_{d2})\le Y_f/K_{d2}$. Substituting this on the
+left-hand side (which can only make the left-hand side larger, so the
+inequality still holds),
+$$
+Y_f+\frac{(C+D)Y_f}{K_{d2}}\ge Y-S
+\quad\Longrightarrow\quad
+Y_f\cdot\frac{K_{d2}+C+D}{K_{d2}}\ge Y-S.
+$$
+Multiplying both sides by the positive number $K_{d2}/(K_{d2}+C+D)$,
+\begin{equation}
+Y_f\ge K_{d2}\frac{Y-S}{K_{d2}+C+D},
+\label{eq:r3-4}
+\end{equation}
+which is positive by assumption 1. This is the heuristic estimate from
+the start of this subsection, now shown to be a lower bound.
+
+\textbf{Step 5: $\delta_1\ll1$.} From $\theta_1=Y_f/(Y_f+K_{d1})$, as in
+Regime 1, $1-\theta_1=K_{d1}/(Y_f+K_{d1})$. Dropping $K_{d1}$ from the
+denominator makes the fraction larger, and then substituting the lower
+bound \eqref{eq:r3-4} for $Y_f$ in the denominator makes it larger
+still:
+$$
+1-\theta_1
+=\frac{K_{d1}}{Y_f+K_{d1}}
+\le\frac{K_{d1}}{Y_f}
+\le\frac{K_{d1}(K_{d2}+C+D)}{K_{d2}(Y-S)}
+=\frac{r(K_{d2}+C+D)}{Y-S},
+$$
+where the last step substitutes $r=K_{d1}/K_{d2}$. Multiplying both sides
+by $S/(Y-S)$,
+$$
+\delta_1
+=\frac{S(1-\theta_1)}{Y-S}
+\le\frac{rS\,(K_{d2}+C+D)}{(Y-S)^2}
+\ll1,
+$$
+by assumption 2.
+
+\textbf{Step 6: $\theta_2\ll1$, $Y_f\ll K_{d2}$, and $\delta_2\ll1$.}
+Because $\delta_2\ge0$, the factor $1/(1+\delta_2)$ in \eqref{eq:r3-3} is
+at most 1, so
+$$
+\theta_2\le\frac{Y-S}{K_{d2}+C+D}\,(1+\delta_1)\ll1,
+$$
+since $(Y-S)/(K_{d2}+C+D)\ll1$ by assumption 3 and $1+\delta_1\approx1$ by
+Step 5. To convert this into a statement about $Y_f$, start from
+$Y_f=\theta_2(Y_f+K_{d2})$, subtract $\theta_2Y_f$ from both sides to get
+$Y_f(1-\theta_2)=\theta_2K_{d2}$, and divide by $K_{d2}(1-\theta_2)$:
+$$
+\frac{Y_f}{K_{d2}}=\frac{\theta_2}{1-\theta_2}.
+$$
+With $\theta_2\ll1$, the right-hand side is approximately $\theta_2\ll1$,
+so $Y_f\ll K_{d2}$. Finally, because $K_{d2}\le K_{d2}+C+D$,
+$$
+\delta_2=\frac{Y_f}{K_{d2}+C+D}\le\frac{Y_f}{K_{d2}}\ll1.
+$$
+
+\textbf{Step 7: result.} Since $\delta_1\ll1$ and $\delta_2\ll1$,
+$(1+\delta_1)/(1+\delta_2)\approx1$, and \eqref{eq:r3-3} becomes
+$$
+\theta_2\approx\frac{Y-S}{K_{d2}+C+D}.
+$$
+Substituting this into \eqref{eq:r3-1}, and using $1-r\approx1$ (because
+$K_{d1}\ll K_{d2}$),
+\begin{equation}
+\rho\approx r+\frac{Y-S}{K_{d2}+C+D}.
+\label{eq:r3-5}
+\end{equation}
+Correspondingly, since $Y_f/K_{d2}=\theta_2/(1-\theta_2)\approx\theta_2$,
+the free antibody is $Y_f\approx K_{d2}(Y-S)/(K_{d2}+C+D)$, confirming the
+heuristic estimate. Substituting $S=A+B$ for the control and $S=A'+B$
+for the treatment,
+$$
+\rho\approx r+\frac{Y-A-B}{K_{d2}+C+D},
+\qquad
+\rho'\approx r+\frac{Y-A'-B}{K_{d2}+C+D}.
+$$
+
+(An exact lower bound also follows. Since
+$d\theta_2/dY_f=K_{d2}/(Y_f+K_{d2})^2>0$, $\theta_2$ increases with
+$Y_f$, so substituting the lower bound \eqref{eq:r3-4} into
+$\theta_2=Y_f/(Y_f+K_{d2})$ and then multiplying the numerator and
+denominator by $(K_{d2}+C+D)/K_{d2}$,
+$$
+\theta_2
+\ge\frac{K_{d2}\frac{Y-S}{K_{d2}+C+D}}
+{K_{d2}\frac{Y-S}{K_{d2}+C+D}+K_{d2}}
+=\frac{Y-S}{(Y-S)+(K_{d2}+C+D)}.
+$$
+Substituting into \eqref{eq:r3-1} gives
+$\rho\ge r+(1-r)(Y-S)/(Y-S+K_{d2}+C+D)$, which agrees with
+\eqref{eq:r3-5} to first order when $Y-S\ll K_{d2}+C+D$.)
+
+Two terms contribute to $\rho$. The first, $r$, is the baseline ratio of
+off-target to target capture efficiency set by the affinities. The
+second is the fraction of off-target epitopes occupied by the excess
+antibody. Because target is saturated ($\theta_1\approx1$), any increase
+in off-target occupancy translates directly into an increase in $\rho$.
+Unlike in Regime 1, the second term is not multiplied by $r$, so $\rho$ is
+not necessarily close to $r$: it can be many times larger.
+
+\textbf{Two sub-cases.} The denominator $K_{d2}+C+D$ reflects the two
+places where the excess antibody can go, in the ratio $K_{d2}:(C+D)$.
+\begin{itemize}
+    \item[(3a)] Few off-target epitopes, $C+D\ll K_{d2}$. Then
+    $K_{d2}+C+D\approx K_{d2}$, so
+    $$
+    Y_f\approx K_{d2}\frac{Y-S}{K_{d2}}=Y-S,
+    \qquad
+    \rho\approx r+\frac{Y-S}{K_{d2}}.
+    $$
+    The excess antibody stays free in solution, and the off-target
+    occupancy is simply $Y_f/K_{d2}$. Assumption 3 becomes $Y-S\ll K_{d2}$,
+    and assumption 2 becomes $K_{d1}S\ll(Y-S)^2$, the exact mirror of
+    Regime 1's assumption 2.
+
+    \item[(3b)] Many off-target epitopes, $C+D\gg K_{d2}$. Then
+    $K_{d2}+C+D\approx C+D$, so
+    $$
+    Y_f\approx K_{d2}\frac{Y-S}{C+D}\ll Y-S,
+    \qquad
+    \rho\approx r+\frac{Y-S}{C+D}.
+    $$
+    The off-target pool soaks up nearly all of the excess antibody, so the
+    excess divided by the number of off-target epitopes is the fraction of
+    off-target epitopes that are occupied. Assumption 3 becomes
+    $Y-S\ll C+D$.
+\end{itemize}
+Chromatin contains an enormous number of weak, nonspecific binding sites,
+so sub-case (3b) is plausible in practice.
+
+(Remark on assumption 3. The approximation to $\theta_2$ in
+\eqref{eq:r3-3} actually requires only $\delta_2\ll1$, i.e.,
+$Y_f\ll K_{d2}+C+D$. In sub-case (3b), this can remain true even when a
+substantial fraction of off-target epitopes is occupied, because the
+large off-target pool keeps $Y_f$ small. Then the exact relation
+\eqref{eq:r3-1} with $\theta_2\approx(Y-S)/(C+D)$ still holds, and $\rho$
+continues to grow linearly with the excess until $Y-S$ approaches $C+D$.
+We keep assumption 3 as stated because it defines the regime in which
+$\rho\ll1$.)
+
+\textbf{How $\rho'$ compares to $\rho$.} Subtracting the approximations
+for $\rho$ and $\rho'$, the $r$ terms cancel and the fractions share a
+common denominator:
+$$\begin{aligned}
+\rho'-\rho
+&\approx\left(r+\frac{Y-S_t}{K_{d2}+C+D}\right)
+-\left(r+\frac{Y-S_c}{K_{d2}+C+D}\right) \\
+&=\frac{(Y-S_t)-(Y-S_c)}{K_{d2}+C+D}
+=\frac{S_c-S_t}{K_{d2}+C+D}.
+\end{aligned}$$
+Substituting $S_c=A+B$ and $S_t=A'+B$, the spike-in terms $B$ cancel:
+\begin{equation}
+\rho'-\rho\approx\frac{(A+B)-(A'+B)}{K_{d2}+C+D}
+=\frac{A-A'}{K_{d2}+C+D}.
+\label{eq:r3-6}
+\end{equation}
+Since the denominator is positive, \textbf{$\rho'>\rho$ when $A'<A$}.
+Intuitively, the treatment removes $A-A'$ target epitopes, which frees
+the $A-A'$ antibody molecules that would have occupied them. That
+antibody joins the excess, and a fraction $(C+D)/(K_{d2}+C+D)$ of it
+lands on off-target epitopes, raising the off-target occupancy.
+
+The sign of $\rho'-\rho$ is in fact exact. Define
+$g(Y_f)=Y_f+SY_f/(Y_f+K_{d1})+(C+D)Y_f/(Y_f+K_{d2})$, so that antibody
+conservation reads $g(Y_f)=Y$. Each term of $g$ increases with $Y_f$,
+and for $Y_f>0$ the middle term increases with $S$. If $S$ decreases
+(from $S_c$ to $S_t$) while $Y$ is held fixed, then $g$ evaluated at the
+old $Y_f$ falls below $Y$, so the new solution must have a larger $Y_f$.
+By the quotient rule,
+$$
+\frac{d\rho}{dY_f}
+=\frac{(Y_f+K_{d2})-(Y_f+K_{d1})}{(Y_f+K_{d2})^2}
+=\frac{K_{d2}-K_{d1}}{(Y_f+K_{d2})^2}>0,
+$$
+so a larger $Y_f$ means a larger $\rho$. This argument applies in every
+regime, including Regime 1.
+
+Note that the magnitude \eqref{eq:r3-6}, unlike the Regime 1 result, is
+not suppressed by a factor of $r$. In Regime 1, a decrease in target
+changes $\rho$ only by changing how tightly the (limiting) antibody is
+held on target, an effect proportional to $r$. Here, the decrease in
+target releases antibody directly into the off-target pool.
+
+\textbf{Relevance to practice.} Typical ChIP protocols use micrograms of
+antibody. An IgG has a molar mass of about 150~kDa, so
+$1~\mu\mathrm{g}$ is about
+$10^{-6}~\mathrm{g}/(1.5\times10^{5}~\mathrm{g/mol})\approx6.7~\mathrm{pmol}$.
+By comparison, a factor with $10^4$ binding sites per cell in $10^6$ cells
+has $10^{10}$ sites, or about
+$10^{10}/(6.0\times10^{23}~\mathrm{mol}^{-1})\approx0.017~\mathrm{pmol}$.
+For many targets, then, standard practice places the IP in this
+antibody-excess regime. (Very abundant epitopes, such as some histone
+modifications, may instead be comparable to or exceed the antibody.)
+
+\subsubsection{ChIP normalization}
+
+The read-count model of Regime 1 applies unchanged, because it used only
+the composition $A:B:\rho C:\rho D$ of the immunoprecipitation. In
+particular, ChIP-Rx scaling gives
+$$
+\frac{n_i'/N_s'}{n_i/N_s}
+=\frac{a_i'}{a_i}\cdot\frac{B+\rho D}{B+\rho' D}.
+$$
+
+\textbf{Rewriting the bias factor.} Write $\rho'=\rho+(\rho'-\rho)$, so
+the denominator is
+$B+\rho'D=(B+\rho D)+(\rho'-\rho)D$. Dividing the numerator and
+denominator of the bias factor by $B+\rho D$,
+$$
+\frac{B+\rho D}{B+\rho'D}
+=\frac{B+\rho D}{(B+\rho D)+(\rho'-\rho)D}
+=\frac{1}{1+\dfrac{(\rho'-\rho)D}{B+\rho D}}.
+$$
+Since $\rho'>\rho$ when $A'<A$, the fraction in the denominator is
+positive, so the bias factor is less than 1: as in Regime 1,
+\textbf{ChIP-Rx overstates the decrease} in the treatment condition. The
+bias factor is approximately 1 only if
+$$
+(\rho'-\rho)D\ll B+\rho D.
+$$
+
+\textbf{Substituting the regime expressions.} Substituting
+\eqref{eq:r3-6} for $\rho'-\rho$ and \eqref{eq:r3-5} for $\rho$, the
+bias factor is
+$$
+\frac{B+\rho D}{B+\rho'D}
+\approx\frac{1}{1+\dfrac{(A-A')D}{(K_{d2}+C+D)\bigl(B+\rho D\bigr)}},
+\qquad
+\rho\approx r+\frac{Y-A-B}{K_{d2}+C+D},
+$$
+and ChIP-Rx is unbiased only if
+$$
+\frac{(A-A')D}{K_{d2}+C+D}\ll B+\left(r+\frac{Y-A-B}{K_{d2}+C+D}\right)D.
+$$
+The left-hand side has a direct interpretation. Splitting the fraction,
+$$
+\frac{(A-A')D}{K_{d2}+C+D}
+=(A-A')\cdot\frac{C+D}{K_{d2}+C+D}\cdot\frac{D}{C+D}:
+$$
+the $A-A'$ antibody molecules freed by the treatment, times the fraction
+of excess antibody that is captured off-target, times the share of
+off-target epitopes that belong to the spike-in. That is the extra
+antibody that ends up on spike-in off-target epitopes in the treatment.
+The right-hand side, $B+\rho D=(B\theta_1+D\theta_2)/\theta_1$, is the
+spike-in material in the control IP divided by $\theta_1\approx1$. So the
+condition says that the extra spike-in capture caused by the freed
+antibody must be small compared with the spike-in capture already
+present.
+
+\textbf{How large can the bias be?} Consider sub-case (3b), so
+$K_{d2}+C+D\approx C+D$, and suppose off-target spike-in reads are a
+minor part of the spike-in signal, $\rho D\ll B$. The fraction in the
+bias factor becomes
+$$
+\frac{(A-A')D}{(K_{d2}+C+D)(B+\rho D)}
+\approx\frac{(A-A')D}{(C+D)B}.
+$$
+Suppose further that the spike-in chromatin has the same ratio of
+off-target to target epitopes as the cells, $D/B=C/A$. Substituting
+$D/B=C/A$,
+$$
+\frac{(A-A')D}{(C+D)B}
+=\frac{(A-A')}{C+D}\cdot\frac{C}{A}
+=\frac{A-A'}{A}\cdot\frac{C}{C+D}.
+$$
+If the spike-in is a small fraction of the chromatin ($D\ll C$), then
+$C/(C+D)\approx1$ and the fraction is approximately $1-A'/A$, the
+fractional loss of target. The bias factor is then
+$$
+\frac{1}{1+(1-A'/A)}=\frac{1}{2-A'/A},
+$$
+and the measured global fold change is
+$$
+\frac{A'}{A}\cdot\frac{1}{2-A'/A}.
+$$
+For example, if the treatment halves the target ($A'/A=1/2$), the bias
+factor is $1/(2-1/2)=2/3$, and ChIP-Rx reports a fold change of
+$(1/2)(2/3)=1/3$ instead of $1/2$. This bias is of order 1, whereas in
+Regime 1 it was suppressed by $r$. The reason is that in this regime the
+freed antibody is redistributed almost entirely onto off-target
+epitopes, and the spike-in receives a share of that redistribution
+comparable to its share of the target signal. (If instead $\rho D\gg B$,
+the bias factor approaches $\rho D/(\rho' D)=\rho/\rho'$, the ratio of
+off-target capture efficiencies, which can also differ substantially
+from 1 when the excess $Y-S$ is not large compared with $A-A'$.)
+
+\textbf{Scaling by spike-in target reads.} The derivation of Regime 1
+used only the read-count model, not any regime-specific approximation.
+Therefore, counting only reads $N_{s,B}$ at the spike-in's target loci
+still gives
+$$
+\frac{n_i'/N_{s,B}'}{n_i/N_{s,B}}=\frac{a_i'}{a_i},
+$$
+removing the bias regardless of $\rho$ and $\rho'$. This matters more
+here than in Regime 1, because the off-target spike-in reads that
+$N_s$ includes are exactly what changes between conditions. (As before,
+reads in spike-in peaks include some off-target background, so the
+cancellation is only approximate; the residual error is larger when
+$\rho D$ is larger.)

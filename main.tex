@@ -1,0 +1,785 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+
+% Core packages
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{array}
+
+% Paragraphs
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1\baselineskip}
+
+\title{ChIP normalization}
+\author{Benjamin Yeh}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\section{Simple model}
+
+Consider cells from two \textbf{conditons}: one control (vehicle), and one treated with a drug that decreases the abundance of a target epitope. Assume equal amounts of cells, antibody, and spike-in (exogenous) chromatin are used for IP across conditions. Consider the molar ratio in the input of the endogenous target epitope ($A$), the exogenous target epitope from the spike-in ($B$), off-target endogenous epitopes ($C$), and off-target exogenous epitopes from the spike-in ($D$):
+\begin{itemize}
+\item Control conditon: $A$:$B$:$C$:$D$
+\item Treatment condition: $A'$:$B$:$C$:$D$
+\end{itemize}
+
+Assume that antibody-epitope binding reaches equilibrium with dissociation constants of $K_{d1}$ and $K_{d2}$ for target and off-target antibody-epitope interactions, respectively, so $K_{d1} \ll K_{d2}$.
+
+Let $Y$ be antibody concentration. Let $Y_f$ refer to free antibody, while $Y_A$, $Y_B$, $Y_C$, and $Y_D$ refer to antibody-antigen complexes.
+
+Key question: \textbf{What are the molar ratios of the epitopes after immunoprecipitation under different regimes of antibody concentration? What is the ratio of spike-in to endogenous epitopes in the immunoprecipitation?}
+
+\subsection{Basic equations}
+
+Because the endogenous and spike-in target epitopes have the same dissociation constant, the mass-action relation applies to each target population separately:
+
+$$
+\begin{gathered}
+K_{d1}
+= \frac{Y_f A_f}{Y_A}
+= \frac{Y_f B_f}{Y_B}
+= \frac{(Y_f) (A_f + B_f)}{Y_A + Y_B} \\
+K_{d2}
+= \frac{Y_f C_f}{Y_C}
+= \frac{Y_f D_f}{Y_D}
+= \frac{(Y_f) (C_f + D_f)}{Y_C + Y_D}
+\end{gathered}
+$$
+
+Below, we will take advantage of the ratios
+
+$$
+\frac{Y_A}{A_f}=\frac{Y_f}{K_{d1}},
+\qquad
+\frac{Y_B}{B_f}=\frac{Y_f}{K_{d1}}.
+$$
+
+Conservation of mass:
+
+$$\begin{gathered}
+A = A_f + Y_A \\
+B = B_f + Y_B \\
+C = C_f + Y_C \\
+D = D_f + Y_D \\
+Y = Y_f + Y_A + Y_B + Y_C + Y_D
+\end{gathered}$$
+
+These equations can be used to derive expressions for the bound fractions of each class in terms of the concentration of free antibody $Y_f$ and the dissociation constants $K_{d1}$ and $K_{d2}$.
+
+$$\begin{aligned}
+\frac{Y_A}{A}
+&= \frac{Y_A}{A_f + Y_A} \\
+&= \frac{Y_A / A_f}{1 + Y_A / A_f} \\
+&= \frac{Y_f / K_{d1}}{1 + Y_f / K_{d1}} \\
+&= \frac{Y_f}{Y_f+K_{d1}}
+\end{aligned}$$
+
+By the same logic,
+$$\begin{gathered}
+\frac{Y_B}{B} = \frac{Y_f}{Y_f + K_{d1}} \\
+\frac{Y_C}{C} = \frac{Y_f}{Y_f + K_{d2}} \\
+\frac{Y_D}{D} = \frac{Y_f}{Y_f + K_{d2}} \\
+\end{gathered}$$
+
+In summary, the proportion bound of each epitope class is
+
+$$\begin{gathered}
+\theta_1
+= \frac{Y_A}{A}
+= \frac{Y_B}{B}
+= \frac{Y_f}{Y_f+K_{d1}} \\
+\theta_2
+= \frac{Y_C}{C}
+= \frac{Y_D}{D}
+= \frac{Y_f}{Y_f+K_{d2}}
+\end{gathered}$$
+
+$K_{d1}$ is therefore the concentration of free antibody at equilibrium when half of the target epitopes are bound. Similarly, $K_{d2}$ is the concentration of free antibody at equilibrium when half of the off-target epitopes are bound.
+
+The immunoprecipitation contains amounts $A \theta_1$, $B \theta_1$, $C \theta_2$, and $D \theta_2$. We can simplify this ratio to $A$ : $B$ : $\rho C$ : $\rho D$, where
+
+$$
+\rho = \frac{\theta_2}{\theta_1} = \frac{Y_f + K_{d1}}{Y_f + K_{d2}}.
+$$
+
+$\rho$ is the ratio of off-target capture efficiency to target capture efficiency and ranges from $r = \frac{K_{d1}}{K_{d2}} \ll 1$ when antibody is limiting ($Y_f \ll K_{d1}$) to 1 when antibody is in excess ($Y_f \gg K_{d2}$). Below, we use $\rho$ to denote this ratio for the control condition and $\rho'$ to denote this ratio for the treatment condition.
+
+Additional observations:
+\begin{itemize}
+\item The ratios $A$ : $B$ and $C$ : $D$ are always conserved from input to immunoprecipitation.
+\item The ratio of endogenous epitope to spike-in epitope is 
+$$
+\frac{A + \rho C}{B + \rho D}.
+$$
+\item The fraction of the immunoprecipitation from the spike-in is
+$$
+\frac{B + \rho D}{A + B + \rho C + \rho D}.
+$$
+As $\rho$ increases from $r$ to 1, this spike-in fraction can either
+increase or decrease, depending on the sign of $AD-BC$. To see this,
+differentiate with respect to $\rho$ using the quotient rule:
+$$\begin{aligned}
+\frac{d}{d\rho}\left(\frac{B+\rho D}{A+B+\rho(C+D)}\right)
+&=\frac{D\bigl(A+B+\rho(C+D)\bigr)-(B+\rho D)(C+D)}
+{\bigl(A+B+\rho(C+D)\bigr)^2} \\
+&=\frac{AD+BD+\rho CD+\rho D^2-BC-BD-\rho CD-\rho D^2}
+{\bigl(A+B+\rho(C+D)\bigr)^2} \\
+&=\frac{AD-BC}{\bigl(A+B+\rho(C+D)\bigr)^2}.
+\end{aligned}$$
+The denominator is positive and the numerator does not depend on $\rho$,
+so the spike-in fraction changes monotonically in $\rho$:
+\begin{itemize}
+    \item If $AD>BC$, i.e., $D/B>C/A$, it increases.
+    \item If $AD<BC$, i.e., $D/B<C/A$, it decreases.
+    \item If $AD=BC$, it is constant.
+\end{itemize}
+In words, the spike-in fraction increases with $\rho$ if and only if the
+spike-in has more off-target epitope per target epitope than the cells
+do.
+
+\end{itemize}
+
+\textbf{Regimes.} Because $\rho=(Y_f+K_{d1})/(Y_f+K_{d2})$ depends only on
+the free-antibody concentration $Y_f$, the regimes below are classified by
+where the antibody goes. Antibody conservation,
+$Y=Y_f+S\theta_1+(C+D)\theta_2$ with $S=A+B$ (or $A'+B$), splits the
+antibody among three ``sinks'': solution, target epitopes (capacity $S$),
+and off-target epitopes (capacity $C+D$). Each regime corresponds to a
+different sink dominating or saturating:
+\begin{itemize}
+    \item Regime 1 (limiting antibody): target epitopes absorb nearly all
+    antibody.
+    \item Regime 2 (dilute epitopes): epitopes are too dilute to absorb
+    much antibody, so $Y_f\approx Y$.
+    \item Regime 3 (antibody in excess of target): target epitopes are
+    saturated, and the excess antibody is free or bound to unsaturated
+    off-target epitopes.
+    \item Regime 4 (saturating antibody): target and off-target epitopes
+    are both saturated.
+\end{itemize}
+The boundaries between these regimes (antibody--target equivalence,
+off-target half-saturation, and $K_{d1}\sim S$) are treated in the
+crossovers section. A general result proved there is that
+$\rho'\ge\rho$ whenever $A'<A$, in every regime: less target leaves more
+free antibody, which raises off-target capture relative to target capture.
+The table summarizes the results; the last column is the ChIP-Rx bias
+factor $(B+\rho D)/(B+\rho'D)$ derived in Regime 1, by which total
+spike-in normalization multiplies the true fold change $a_i'/a_i$.
+
+{\renewcommand{\arraystretch}{1.6}
+\footnotesize
+\begin{center}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.13\linewidth}|>{\raggedright\arraybackslash}p{0.19\linewidth}|>{\raggedright\arraybackslash}p{0.15\linewidth}|>{\raggedright\arraybackslash}p{0.11\linewidth}|>{\raggedright\arraybackslash}p{0.12\linewidth}|>{\raggedright\arraybackslash}p{0.13\linewidth}|}
+\hline
+\textbf{Regime} & \textbf{Conditions} (for $S=A+B$ and $A'+B$) & $\boldsymbol{\rho}$ \textbf{(control)} & $\boldsymbol{\rho'}$ \textbf{(treatment)} & $\boldsymbol{\rho'}$ \textbf{vs.} $\boldsymbol{\rho}$ \textbf{when} $\boldsymbol{A'<A}$ & \textbf{ChIP-Rx bias} \\
+\hline
+1. Limiting antibody
+& $Y<S$; $K_{d1}Y\ll(S-Y)^2$; $rY\ll S-Y$; $r(C+D)Y\ll(S-Y)^2$
+& $\approx r\dfrac{A+B}{A+B-Y}$
+& $\approx r\dfrac{A'+B}{A'+B-Y}$
+& $\rho'>\rho$; both $\to r$ if $Y\ll S$
+& $<1$; $\approx1$ if $\rho'D\ll B$ \\
+\hline
+2. Dilute epitopes
+& $S\ll K_{d1}$; $C+D\ll K_{d2}$; any $Y$
+& $\approx\dfrac{Y+K_{d1}}{Y+K_{d2}}$
+& $\approx\rho$
+& $\rho'\approx\rho$ (relative difference $\le S_c/K_{d1}+(C+D)/K_{d2}$)
+& $\approx1$, even if $\rho D\gtrsim B$ \\
+\hline
+3. Antibody in excess of target
+& $Y>S$; $rS(K_{d2}+C+D)\ll(Y-S)^2$; $Y-S\ll K_{d2}+C+D$
+& $\approx r+\dfrac{Y-A-B}{K_{d2}+C+D}$
+& $\approx r+\dfrac{Y-A'-B}{K_{d2}+C+D}$
+& $\rho'>\rho$; $\rho'-\rho\approx\dfrac{A-A'}{K_{d2}+C+D}$, not suppressed by $r$
+& $<1$, possibly far from 1 (overstates the decrease) \\
+\hline
+4. Saturating antibody
+& $Y-S-(C+D)\gg K_{d2}$
+& $\approx1$
+& $\approx1$
+& $\rho'>\rho$, but negligibly
+& $\approx1$, but no enrichment over off-target (IP $\approx$ input) \\
+\hline
+Crossover: equivalence (1$\leftrightarrow$3)
+& $|S-Y|\lesssim$ a few $\sqrt{K_{d1}S}$; $K_{d1}\ll S$
+& $\approx\dfrac{Y_f+K_{d1}}{K_{d2}}$, $Y_f\approx\sqrt{K_{d1}S}$ at $Y=S$
+& same with $S=A'+B$
+& $\rho'\gg\rho$ possible
+& $<1$; largest bias of any regime \\
+\hline
+Crossover: off-target half-saturation (3$\leftrightarrow$4)
+& Target saturated; $Y_f\sim K_{d2}$
+& $\approx\dfrac{Y_f}{Y_f+K_{d2}}$; $=\tfrac12$ at $Y=S+K_{d2}+\tfrac{C+D}{2}$
+& same with $S=A'+B$
+& $\rho'>\rho$, slightly
+& $\le1$; $\approx1$ unless $A-A'\sim K_{d2}$ \\
+\hline
+\end{tabular}
+\end{center}
+}
+
+\subsection{Regime 1: limiting antibody}
+
+Let $S_c=A+B$ and $S_t=A'+B$ be the total target-epitope
+concentrations in the control and treatment conditions, and let
+$S\in\{S_c,S_t\}$ denote the total target-epitope concentration of
+either condition. We assume the following
+for both conditions (i.e., for each $S\in\{S_c,S_t\}$).
+
+The assumptions are easiest to interpret through a heuristic estimate of
+the free-antibody concentration. If nearly all antibody is bound to
+target, then about $Y$ target epitopes are bound and about $S-Y$ are free.
+Rearranging the mass-action relation
+$K_{d1}=Y_f(A_f+B_f)/(Y_A+Y_B)$ then gives
+$$
+Y_f
+=K_{d1}\frac{Y_A+Y_B}{A_f+B_f}
+\approx K_{d1}\frac{Y}{S-Y}.
+$$
+Below, we show that this estimate is in fact an exact upper bound on
+$Y_f$.
+
+\begin{enumerate}
+    \item Antibody is less abundant than target epitope:
+    $$
+    Y<S.
+    $$
+    Thus, even if every antibody molecule binds a target epitope, the
+    remaining target concentration $S-Y$ is positive.
+
+    \item Free antibody is scarce relative to the remaining target:
+    $$
+    K_{d1}Y\ll(S-Y)^2.
+    $$
+    Dividing both sides by $S-Y$ shows that this is equivalent to
+    $K_{d1}Y/(S-Y)\ll S-Y$: the estimated free antibody is much less than
+    the free target. This matters because antibody that is free does not
+    occupy a target epitope, so it leaves an extra epitope free; the free
+    target concentration stays close to $S-Y$ only if $Y_f$ is small
+    compared with $S-Y$. The square arises because $S-Y$ appears twice:
+    once in the estimate of $Y_f$ (more free target pulls more antibody out
+    of solution) and once as the yardstick against which $Y_f$ is compared.
+
+    Taking square roots, the condition is equivalent to
+    $\sqrt{K_{d1}Y}\ll S-Y$. Here $\sqrt{K_{d1}Y}$ is roughly the
+    free-antibody concentration at exact equivalence ($S=Y$): there, the
+    bound target is approximately $Y$ and the free target is
+    $S-(Y-Y_f)=Y_f$, so the mass-action relation gives
+    $K_{d1}\approx Y_f\cdot Y_f/Y$, i.e., $Y_f\approx\sqrt{K_{d1}Y}$. The
+    condition thus says that the excess target $S-Y$ must greatly exceed
+    the free antibody that would remain if the antibody exactly titrated the
+    target.
+
+    Formally, below we show that $Y_f\le K_{d1}Y/(S-Y)$. Dividing both
+    sides by $S-Y$ (which is positive by assumption 1) and then applying
+    this condition,
+    $$
+    \frac{Y_f}{S-Y}
+    \le\frac{K_{d1}Y}{(S-Y)(S-Y)}
+    =\frac{K_{d1}Y}{(S-Y)^2}
+    \ll1.
+    $$
+    Multiplying both sides by $S-Y$ gives $Y_f\ll S-Y$.
+
+    \item The free-antibody concentration is small relative to $K_{d2}$:
+    $$
+    rY\ll S-Y.
+    $$
+    Dividing both sides by $S-Y$ and substituting $r=K_{d1}/K_{d2}$,
+    $$
+    \frac{rY}{S-Y}
+    =\frac{1}{K_{d2}}\cdot K_{d1}\frac{Y}{S-Y}
+    \ll1,
+    $$
+    so this condition says that the estimated free antibody is much less
+    than $K_{d2}$: off-target epitopes are far from half-occupied. In this
+    unsaturated regime, $\theta_2=Y_f/(Y_f+K_{d2})\approx Y_f/K_{d2}$, so
+    $rY/(S-Y)$ is approximately the fraction of off-target epitopes that are
+    bound.
+
+    The quantity $rY$ is not especially meaningful on its own; the
+    rearrangement $Y\ll(S-Y)/r$ is more interpretable. Rearranging the
+    mass-action relation, the target-bound antibody is
+    $Y_A+Y_B=Y_f(A_f+B_f)/K_{d1}$. For $Y_f$ to reach $K_{d2}$ while about
+    $S-Y$ target remains free, the target-bound antibody would have to be
+    about $K_{d2}(S-Y)/K_{d1}=(S-Y)/r$. The condition says that the total
+    antibody is far below this amount. Below, we show that this condition
+    implies $Y_f\ll K_{d2}$.
+
+    \item Off-target binding consumes little antibody:
+    $$
+    r(C+D)Y\ll(S-Y)^2.
+    $$
+    By the mass-action relations, a free target epitope is bound by
+    antibody in the ratio $(Y_A+Y_B)/(A_f+B_f)=Y_f/K_{d1}$, while an
+    off-target epitope is bound in the ratio
+    $(Y_C+Y_D)/(C_f+D_f)=Y_f/K_{d2}$. In the unsaturated regime
+    (assumption 3), nearly all off-target epitopes are free, so
+    $C_f+D_f\approx C+D$ and
+    $$
+    Y_C+Y_D
+    \approx\frac{Y_f}{K_{d2}}(C+D)
+    =\frac{Y_f}{K_{d1}}\cdot r(C+D).
+    $$
+    That is, the off-target pool binds as much antibody as $r(C+D)$ free
+    target epitopes would. Thus $r(C+D)$ is the off-target pool measured in
+    ``free-target-epitope equivalents.''
+
+    Dividing both sides of the condition by $S-Y$ and substituting
+    $r=K_{d1}/K_{d2}$,
+    $$
+    (C+D)\cdot\frac{1}{K_{d2}}\cdot K_{d1}\frac{Y}{S-Y}\ll S-Y.
+    $$
+    The left-hand side is $C+D$ times the estimated off-target occupancy
+    $Y_f/K_{d2}$, i.e., the estimated off-target-bound antibody. As in
+    assumption 2, the condition says that antibody that is not on a target
+    epitope (here, antibody bound off-target) is much less than the free
+    target, and the square arises for the same reason. Below, we show that
+    this condition makes the off-target-bound antibody amount negligible
+    relative to the remaining target $S-Y$.
+\end{enumerate}
+In summary, assumptions 2 and 4 keep the free target concentration close
+to $S-Y$ by limiting the two places antibody can go other than a target
+epitope: solution and off-target epitopes. Assumption 3 keeps off-target
+binding unsaturated.
+
+\textbf{Simpler sufficient conditions.} Suppose $Y\le S/2$. Multiplying
+both sides by 2 gives $2Y\le S$, and subtracting $Y$ from both sides gives
+$Y\le S-Y$. Since $S-Y>0$ by assumption 1, dividing both sides by $S-Y$
+gives
+$$
+\frac{Y}{S-Y}\le1.
+$$
+Now write the left-hand sides of assumptions 2 and 4, divided by
+$(S-Y)^2$, as products:
+$$
+\frac{K_{d1}Y}{(S-Y)^2}
+=\frac{K_{d1}}{S-Y}\cdot\frac{Y}{S-Y}
+\le\frac{K_{d1}}{S-Y},
+\qquad
+\frac{r(C+D)Y}{(S-Y)^2}
+=\frac{r(C+D)}{S-Y}\cdot\frac{Y}{S-Y}
+\le\frac{r(C+D)}{S-Y},
+$$
+where each inequality uses $Y/(S-Y)\le1$. Therefore, if
+$K_{d1}\ll S-Y$, then $K_{d1}Y/(S-Y)^2\ll1$, which is assumption 2; and
+if $r(C+D)\ll S-Y$, then $r(C+D)Y/(S-Y)^2\ll1$, which is assumption 4.
+When $Y$ approaches $S$, however, the factor $Y/(S-Y)$ grows without
+bound, and the simpler conditions are no longer sufficient.
+
+We now derive $\rho$ for either condition. (For the treatment condition,
+$\theta_1$, $\theta_2$, $Y_f$, and $\rho$ should be read as their primed
+counterparts.)
+
+\textbf{Antibody conservation.} The target-bound antibody is
+$Y_A+Y_B=A\theta_1+B\theta_1=S\theta_1$, and the off-target-bound antibody
+is $Y_C+Y_D=C\theta_2+D\theta_2=(C+D)\theta_2$. Substituting these into
+$Y=Y_f+Y_A+Y_B+Y_C+Y_D$ gives
+$$
+Y=Y_f+S\theta_1+(C+D)\theta_2.
+$$
+
+\textbf{Step 1: free target.} The free target concentration is
+$S-S\theta_1=S(1-\theta_1)$. Solving antibody conservation for
+$S\theta_1$ gives $S\theta_1=Y-Y_f-(C+D)\theta_2$, so
+\begin{equation}
+S(1-\theta_1)
+=S-\bigl(Y-Y_f-(C+D)\theta_2\bigr)
+=(S-Y)+Y_f+(C+D)\theta_2.
+\label{eq:r1-1}
+\end{equation}
+Intuitively, the free target is the target left over if all antibody
+were bound to target ($S-Y$), plus the target ``freed up'' by antibody
+that is free or bound off-target.
+
+\textbf{Step 2: an exact expression for $\rho$.} From
+$\theta_1=Y_f/(Y_f+K_{d1})$,
+$$
+1-\theta_1
+=\frac{Y_f+K_{d1}}{Y_f+K_{d1}}-\frac{Y_f}{Y_f+K_{d1}}
+=\frac{K_{d1}}{Y_f+K_{d1}},
+$$
+so, multiplying the numerator and denominator by $S$,
+\begin{equation}
+Y_f+K_{d1}=\frac{K_{d1}}{1-\theta_1}=\frac{K_{d1}S}{S(1-\theta_1)}.
+\label{eq:r1-2}
+\end{equation}
+Substituting \eqref{eq:r1-2} into the numerator of $\rho$, and then \eqref{eq:r1-1} into the
+result,
+$$\begin{aligned}
+\rho
+&=\frac{Y_f+K_{d1}}{Y_f+K_{d2}} \\
+&=\frac{K_{d1}S}{S(1-\theta_1)\,(Y_f+K_{d2})} \\
+&=\frac{K_{d1}S}{\bigl[(S-Y)+Y_f+(C+D)\theta_2\bigr](K_{d2}+Y_f)}.
+\end{aligned}$$
+Factoring $S-Y$ out of the first bracket and $K_{d2}$ out of the second,
+and using $r=K_{d1}/K_{d2}$,
+\begin{equation}
+\rho
+=r\frac{S}{S-Y}\cdot\frac{1}{(1+\varepsilon_1)(1+\varepsilon_2)},
+\qquad
+\varepsilon_1=\frac{Y_f+(C+D)\theta_2}{S-Y},
+\quad
+\varepsilon_2=\frac{Y_f}{K_{d2}}.
+\label{eq:r1-3}
+\end{equation}
+Equation \eqref{eq:r1-3} is exact. It remains to show that $\varepsilon_1\ll1$ and
+$\varepsilon_2\ll1$.
+
+\textbf{Step 3: an upper bound on $Y_f$.} Because $Y_f\ge0$ and
+$(C+D)\theta_2\ge0$, equation \eqref{eq:r1-1} gives $S(1-\theta_1)\ge S-Y$, which is
+positive by assumption 1. A smaller denominator gives a larger fraction,
+so substituting into \eqref{eq:r1-2},
+$$
+Y_f+K_{d1}\le\frac{K_{d1}S}{S-Y}.
+$$
+Subtracting $K_{d1}$ from both sides,
+\begin{equation}
+Y_f
+\le\frac{K_{d1}S}{S-Y}-\frac{K_{d1}(S-Y)}{S-Y}
+=\frac{K_{d1}Y}{S-Y}.
+\label{eq:r1-4}
+\end{equation}
+
+\textbf{Step 4: $\varepsilon_2\ll1$.} Dividing \eqref{eq:r1-4} by $K_{d2}$,
+\begin{equation}
+\varepsilon_2
+=\frac{Y_f}{K_{d2}}
+\le\frac{K_{d1}}{K_{d2}}\cdot\frac{Y}{S-Y}
+=\frac{rY}{S-Y}
+\ll1,
+\label{eq:r1-5}
+\end{equation}
+where the final inequality is assumption 3. Therefore, $Y_f\ll K_{d2}$.
+
+\textbf{Step 5: $\varepsilon_1\ll1$.} Split $\varepsilon_1$ into its two
+terms. For the free-antibody term, dividing \eqref{eq:r1-4} by $S-Y$,
+$$
+\frac{Y_f}{S-Y}
+\le\frac{K_{d1}Y}{(S-Y)^2}
+\ll1,
+$$
+by assumption 2. For the off-target term, dropping $Y_f$ from the
+denominator of $\theta_2$ makes it larger, so by \eqref{eq:r1-5},
+$$
+\theta_2=\frac{Y_f}{Y_f+K_{d2}}\le\frac{Y_f}{K_{d2}}\le\frac{rY}{S-Y}.
+$$
+Multiplying by $(C+D)/(S-Y)$,
+$$
+\frac{(C+D)\theta_2}{S-Y}
+\le\frac{r(C+D)Y}{(S-Y)^2}
+\ll1,
+$$
+by assumption 4. Since both terms are $\ll1$, so is their sum
+$\varepsilon_1$.
+
+\textbf{Step 6: result.} Since $\varepsilon_1\ll1$ and $\varepsilon_2\ll1$,
+$(1+\varepsilon_1)(1+\varepsilon_2)\approx1$, and \eqref{eq:r1-3} becomes
+$$
+\rho\approx r\frac{S}{S-Y}.
+$$
+(Because $\varepsilon_1,\varepsilon_2\ge0$, \eqref{eq:r1-3} also shows that
+$r\,S/(S-Y)$ is an exact upper bound on $\rho$.) Substituting $S=A+B$ for
+the control and $S=A'+B$ for the treatment,
+$$
+\rho\approx r\frac{A+B}{A+B-Y},
+\qquad
+\rho'\approx r\frac{A'+B}{A'+B-Y}.
+$$
+
+If, in addition, $Y\ll\min(A+B,A'+B)$, these reduce to $\rho\approx\rho'\approx r$.
+
+Note that \textbf{$\rho'$ increases relative to $\rho$ when $A' < A$}. This can be seen from the expression
+$$\rho \approx r \frac{S}{S-Y} = r \frac{S-Y+Y}{S-Y} = r \left(1 + \frac{Y}{S-Y} \right).$$
+For $S>Y$ (assumption 1), decreasing $S$ decreases the positive denominator $S-Y$, so $\frac{Y}{S-Y}$ and hence $\rho$ increase.
+
+\subsubsection{ChIP normalization}
+
+In the control condition, the ratio of endogenous to spike-in epitopes in the immunoprecipitation is
+$\frac{A + \rho C}{B + \rho D}$
+
+In the treatment condition, the ratio of endogenous to spike-in epitopes in the immunoprecipitation is
+$\frac{A' + \rho' C}{B + \rho' D}$.
+
+\textbf{Goal.} Let $a_i$ and $a_i'$ be the concentrations of target
+epitope at genomic locus $i$ in the control and treatment conditions,
+so that $\sum_i a_i=A$ and $\sum_i a_i'=A'$. We want normalized signals
+whose ratio between conditions at each locus is the true fold change
+$a_i'/a_i$.
+
+\textbf{Reads.} Assume that sequencing samples reads in proportion to the
+composition of the immunoprecipitation, and that target loci do not
+overlap off-target loci. Let $N$ be the total number of reads in the
+control library. The immunoprecipitation contains $a_i\theta_1$ at locus
+$i$ out of a total of $(A+B)\theta_1+(C+D)\theta_2$. Dividing the numerator
+and denominator by $\theta_1$ and substituting $\rho=\theta_2/\theta_1$,
+the expected number of reads at locus $i$ is
+$$
+n_i
+=N\frac{a_i\theta_1}{(A+B)\theta_1+(C+D)\theta_2}
+=N\frac{a_i}{A+B+\rho(C+D)}.
+$$
+By the same logic, the expected number of reads mapping to the spike-in
+genome (from both target and off-target spike-in epitopes) is
+$$
+N_s
+=N\frac{B+\rho D}{A+B+\rho(C+D)}.
+$$
+The treatment library has the analogous quantities $N'$, $n_i'$, and
+$N_s'$, with $A$, $a_i$, and $\rho$ replaced by $A'$, $a_i'$, and $\rho'$.
+
+\textbf{Scaling by total reads (RPM).} Multiplying each library by
+$\alpha=1/N$ (or $10^6/N$, in reads per million) gives
+$$
+\frac{n_i}{N}=\frac{a_i}{A+B+\rho(C+D)},
+\qquad
+\frac{n_i'}{N'}=\frac{a_i'}{A'+B+\rho'(C+D)}.
+$$
+The ratio between conditions is
+$$
+\frac{n_i'/N'}{n_i/N}
+=\frac{a_i'}{a_i}\cdot\frac{A+B+\rho(C+D)}{A'+B+\rho'(C+D)}.
+$$
+If the treatment decreases the target globally ($A'<A$) and the
+spike-in and off-target terms are small, the second factor is
+approximately $A/A'>1$, which cancels the global decrease. Thus, RPM
+normalization hides global changes; this is the motivation for spike-in
+normalization.
+
+\textbf{Scaling by spike-in reads (ChIP-Rx).} Multiplying each library by
+$\alpha=1/N_s$ for the control and $\alpha'=1/N_s'$ for the treatment (in
+practice, $10^6/N_s$ and $10^6/N_s'$), the factors $N$ and
+$A+B+\rho(C+D)$ cancel:
+$$
+\frac{n_i}{N_s}
+=\frac{N\,a_i/(A+B+\rho(C+D))}{N\,(B+\rho D)/(A+B+\rho(C+D))}
+=\frac{a_i}{B+\rho D},
+\qquad
+\frac{n_i'}{N_s'}=\frac{a_i'}{B+\rho' D}.
+$$
+The ratio between conditions is
+$$
+\frac{n_i'/N_s'}{n_i/N_s}
+=\frac{a_i'}{a_i}\cdot\frac{B+\rho D}{B+\rho' D}.
+$$
+The second factor is a bias. It equals 1 if $\rho D\ll B$ and
+$\rho' D\ll B$, i.e., if off-target binding to the spike-in is
+negligible compared with target binding to the spike-in. In the
+limiting-antibody regime, substituting the approximations for $\rho$ and
+$\rho'$, this requires
+$$
+r\frac{A+B}{A+B-Y}D\ll B,
+\qquad
+r\frac{A'+B}{A'+B-Y}D\ll B.
+$$
+Otherwise, because $\rho'>\rho$ when $A'<A$, we have $B+\rho' D>B+\rho D$,
+so the bias factor is less than 1: spike-in normalization
+\emph{overstates} the decrease in the treatment condition.
+
+\textbf{Scaling by spike-in target reads.} The bias arises because $N_s$
+includes off-target spike-in reads, whose capture efficiency differs
+between conditions. If instead we count only the reads $N_{s,B}$ at the
+spike-in's target loci (e.g., reads in spike-in peaks), then by the same
+logic as above,
+$$
+N_{s,B}
+=N\frac{B}{A+B+\rho(C+D)},
+\qquad
+N_{s,B}'
+=N'\frac{B}{A'+B+\rho'(C+D)}.
+$$
+Using scaling factors $\alpha=1/N_{s,B}$ and $\alpha'=1/N_{s,B}'$,
+$$
+\frac{n_i}{N_{s,B}}=\frac{a_i}{B},
+\qquad
+\frac{n_i'}{N_{s,B}'}=\frac{a_i'}{B},
+\qquad
+\frac{n_i'/N_{s,B}'}{n_i/N_{s,B}}=\frac{a_i'}{a_i},
+$$
+which recovers the true fold change regardless of $\rho$ and $\rho'$.
+(In practice, reads in spike-in peaks also include some off-target
+background, so this cancellation is only approximate.)
+
+\subsubsection{Example: Pol II S2ph ChIP in K562 cells with an mESC spike-in}
+
+We now ask what antibody and spike-in amounts would place a realistic
+experiment in Regime 1. All parameter values below are order-of-magnitude
+estimates; the point is the method, which can be rerun with better
+numbers.
+
+\textbf{Experimental setup.}
+\begin{itemize}
+    \item 5 million K562 cells per condition; control is vehicle, and the
+    treatment (e.g., a CDK9 inhibitor) halves Ser2-phosphorylated Pol II,
+    so $A'=A/2$.
+    \item Spike-in: mouse embryonic stem cell (mESC) chromatin from
+    $5\times10^5$ cells (10\% of the K562 cell number).
+    \item Antibody: Cell Signaling Technology \#13499, Phospho-Rpb1 CTD
+    (Ser2) (E1Z3G) rabbit monoclonal antibody (IgG, $\approx150$ kDa).
+    The manufacturer recommends 10~$\mu$L (1:50) per IP of 10~$\mu$g
+    chromatin ($\approx4\times10^6$ cells). The stock concentration is
+    lot-specific and not listed on the product page; we assume
+    $50~\mu\text{g/mL}$, so 10~$\mu$L is $\approx0.5~\mu$g.
+    \item IP volume $V=500~\mu$L (typical for SimpleChIP-style protocols).
+\end{itemize}
+
+\textbf{Epitope abundances.} A HeLa cell contains roughly
+$3\times10^5$ Pol II molecules, of which roughly $0.65$--$1.1\times10^5$
+are hyperphosphorylated (Pol IIO) or actively transcribing (Kimura et
+al., 1999; Mol Cell Biol 19:5383). K562 cells are somewhat larger than
+HeLa cells with substantially larger nuclei, so we take
+$10^5$ Ser2-phosphorylated Pol II per K562 cell. We are not aware of a
+direct count in mESCs; given their smaller size, we take
+$5\times10^4$ per mESC. We treat each Ser2-phosphorylated Pol II as a
+single target epitope, even though the CTD contains 52 heptad repeats
+that can each carry Ser2 phosphorylation. Multiple epitopes per
+molecule mainly increase the effective (avidity-enhanced) affinity, which
+we absorb into $K_{d1}$. For off-target epitopes (non-S2ph Pol II, other
+phosphoproteins, and nonspecific chromatin sites), we assume $10^7$ sites
+per cell in both species.
+
+To convert a number of molecules per cell into a concentration in the IP,
+multiply by the number of cells, divide by Avogadro's number
+$N_A=6.022\times10^{23}~\text{mol}^{-1}$, and divide by $V$:
+$$\begin{aligned}
+A
+&=\frac{(5\times10^6)(10^5)}{(6.022\times10^{23})(5\times10^{-4}~\text{L})}
+=\frac{5\times10^{11}}{3.011\times10^{20}}~\text{M}
+\approx1.66~\text{nM}, \\
+B
+&=\frac{(5\times10^5)(5\times10^4)}{(6.022\times10^{23})(5\times10^{-4}~\text{L})}
+\approx0.083~\text{nM}, \\
+C
+&=\frac{(5\times10^6)(10^7)}{(6.022\times10^{23})(5\times10^{-4}~\text{L})}
+\approx166~\text{nM},
+\qquad
+D\approx16.6~\text{nM}.
+\end{aligned}$$
+With $A'=A/2\approx0.83$~nM, the total target concentrations are
+$$
+S_c=A+B\approx1.74~\text{nM},
+\qquad
+S_t=A'+B\approx0.91~\text{nM},
+\qquad
+C+D\approx183~\text{nM}.
+$$
+
+\textbf{Affinities.} We assume an effective target affinity
+$K_{d1}=0.1$~nM (typical of rabbit monoclonal antibodies, and helped by
+avidity) and an off-target affinity $K_{d2}=1~\mu\text{M}=1000$~nM, so
+$r=K_{d1}/K_{d2}=10^{-4}$.
+
+\textbf{The recommended antibody amount is not in Regime 1.} An IgG of
+150~kDa has $1/(1.5\times10^5~\text{g/mol})\approx6.7$~pmol per $\mu$g.
+Thus $0.5~\mu$g in 500~$\mu$L is
+$$
+Y
+=\frac{0.5\times10^{-6}~\text{g}}{(1.5\times10^5~\text{g/mol})(5\times10^{-4}~\text{L})}
+\approx6.7~\text{nM},
+$$
+which exceeds both $S_c$ and $S_t$, violating assumption 1. The
+recommended protocol therefore operates with antibody in excess of
+target (Regime 3 below).
+
+\textbf{Choosing $Y$ for Regime 1.} The treatment condition, with the
+smaller $S$, is the binding constraint, so we check each assumption with
+$S=S_t\approx0.91$~nM. Try $Y=0.2$~nM, so $S_t-Y\approx0.71$~nM.
+\begin{enumerate}
+    \item $Y=0.2~\text{nM}<S_t\approx0.91$~nM. \checkmark
+    \item $\dfrac{K_{d1}Y}{(S_t-Y)^2}
+    =\dfrac{(0.1)(0.2)}{(0.71)^2}
+    \approx0.04\ll1$. \checkmark
+    \item $\dfrac{rY}{S_t-Y}
+    =\dfrac{(10^{-4})(0.2)}{0.71}
+    \approx3\times10^{-5}\ll1$. \checkmark
+    \item $\dfrac{r(C+D)Y}{(S_t-Y)^2}
+    =\dfrac{(10^{-4})(183)(0.2)}{(0.71)^2}
+    \approx0.007\ll1$. \checkmark
+\end{enumerate}
+In the control, $S_c-Y\approx1.54$~nM is larger, so every ratio is even
+smaller. Assumption 2 is the tightest: increasing $Y$ to 0.45~nM
+($\approx S_t/2$) would raise its ratio to
+$(0.1)(0.45)/(0.46)^2\approx0.2$, which is no longer $\ll1$.
+
+Converting $Y=0.2$~nM into an amount of antibody,
+$$
+(0.2\times10^{-9}~\text{M})(5\times10^{-4}~\text{L})
+=10^{-13}~\text{mol},
+\qquad
+(10^{-13}~\text{mol})(1.5\times10^5~\text{g/mol})
+=1.5\times10^{-8}~\text{g}
+=15~\text{ng},
+$$
+i.e., about 0.3~$\mu$L of the assumed 50~$\mu$g/mL stock, roughly
+30-fold less than recommended. (If both arms of the IgG bind
+independently, the binding-site concentration is $2Y$, and the antibody
+amount should be halved again.)
+
+\textbf{Predicted capture efficiencies and bias.} Substituting into the
+Regime 1 result,
+$$\begin{aligned}
+\rho&\approx r\frac{S_c}{S_c-Y}=10^{-4}\cdot\frac{1.74}{1.54}\approx1.13\times10^{-4}, \\
+\rho'&\approx r\frac{S_t}{S_t-Y}=10^{-4}\cdot\frac{0.91}{0.71}\approx1.28\times10^{-4}.
+\end{aligned}$$
+The ChIP-Rx bias factor is then
+$$
+\frac{B+\rho D}{B+\rho'D}
+=\frac{0.083+(1.13\times10^{-4})(16.6)}{0.083+(1.28\times10^{-4})(16.6)}
+=\frac{0.0849}{0.0851}
+\approx0.997,
+$$
+so total-spike-in normalization is accurate to $\approx0.3\%$. For
+comparison, solving the full conservation equation numerically at the
+recommended $Y\approx6.7$~nM gives $\rho\approx4.3\times10^{-3}$,
+$\rho'\approx5.0\times10^{-3}$, and a bias factor of
+$\approx0.93$: ChIP-Rx would overstate the treatment-induced decrease by
+$\approx7\%$, and off-target epitopes would make up nearly half
+($\rho D/(B+\rho D)\approx0.46$) of the spike-in reads.
+
+\textbf{Yield.} In Regime 1 nearly all antibody is bound to target, so
+about $Y\cdot V=10^{-13}$~mol $\approx6\times10^{10}$ Pol II molecules are
+captured: $\theta_1\approx Y/S$ is about 11\% of target epitopes in the
+control and 22\% in the treatment. At $\sim$200~bp per captured fragment
+and 650~g/mol per base pair, this is roughly
+$(10^{-13})(200)(650)\approx13$~ng of DNA, before losses, which is ample
+for library preparation.
+
+\textbf{Practical notes.} If the antibody amount cannot be reduced this
+far, increasing $S$ helps: concentrating the IP into a smaller volume or
+using more cells raises $S-Y$ for a fixed amount of antibody, which
+relaxes assumption 2 quadratically. Because the spike-in contributes
+only $\approx5\%$ of the target ($B/A\approx0.05$), changing the spike-in
+amount barely affects whether Regime 1 holds. Its main role is to
+ensure enough spike-in target reads, and to keep $\rho D\ll B$. Finally,
+the stock concentration, $K_{d1}$, and the epitope counts should be
+measured or checked (e.g., against the lot's certificate of analysis) before
+relying on these numbers.
+
+\input{regime2}
+\input{regime3}
+\input{regime4}
+\input{crossovers}
+
+
+
+
+
+% $$
+% A + B = A_f + B_f + Y_A + Y_B
+% $$
+
+% Treat $A_f + B_f$ and $Y_A + Y_B$ as unknowns, but $Y_f$, $K_{d1}$, and $A + B$ as knowns. Then,
+
+% $$
+% \begin{aligned}
+% K_{d1}
+% &= \frac{(Y_f) (A_f + B_f)}{Y_A + Y_B} \\
+% &= \frac{(Y_f) (A + B - Y_A + Y_B)}{Y_A + Y_B}
+% \end{aligned}$$
+
+\end{document}
